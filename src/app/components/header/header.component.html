@@ -1,1 +1,21 @@
-<p>header</p>
+@if (light){
+  <header >
+    <div class="branding">
+      <a href="" class="nav-link">
+        <span class="title">Clarity Design</span>
+      </a>
+    </div>
+  </header>
+} @else {
+  <header class="header-6">
+    <div class="branding">
+      <a href="" class="nav-link">
+        <span class="title">Clarity Design</span>
+      </a>
+    </div>
+    <div class="header-actions">
+      <a href="/login" class="nav-link nav-text">Log In</a>
+      <a href="/register" class="nav-link nav-text">Register</a>
+    </div>
+  </header>
+}

@@ -1,0 +1,59 @@
+
+<div class="login-wrapper">
+  <form class="login" (ngSubmit)="handleRegister()">
+    <div class="login-body">
+      <section class="title">
+        <div class="welcome">Register</div>
+      </section>
+      <div class="login-group">
+        <clr-input-container>
+          <label class="clr-sr-only">Username</label>
+          <input
+            type="text"
+            autocomplete="username"
+            name="username"
+            clrInput
+            placeholder="Enter username"
+            [(ngModel)]="form.username"
+          />
+        </clr-input-container>
+        <clr-input-container>
+          <label class="clr-sr-only">E-mail</label>
+          <input
+            type="text"
+            autocomplete="email"
+            name="email"
+            clrInput
+            placeholder="Enter e-mail"
+            [(ngModel)]="form.email"
+          />
+        </clr-input-container>
+        <clr-password-container>
+          <label class="clr-sr-only">Password</label>
+          <input
+            type="password"
+            autocomplete="current-password"
+            name="password"
+            clrPassword
+            placeholder="Enter password"
+            [(ngModel)]="form.password"
+          />
+        </clr-password-container>
+        <clr-password-container>
+          <label class="clr-sr-only">Confirm Password</label>
+          <input
+            type="password"
+            autocomplete="current-password"
+            name="confirm-password"
+            clrPassword
+            placeholder="Confirm password"
+            [(ngModel)]="form.confirmPassword"
+          />
+        </clr-password-container>
+        <!--        <div class="error active">Invalid user name or password</div>-->
+        <button type="submit" class="btn btn-primary">Register</button>
+        <a href="/login" class="signup">Back to Login</a>
+      </div>
+    </div>
+  </form>
+</div>
