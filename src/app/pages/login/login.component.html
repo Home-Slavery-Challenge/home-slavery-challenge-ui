@@ -1,6 +1,6 @@
 
 <div class="login-wrapper">
-  <form class="login" (ngSubmit)="handleLogin()">
+  <form class="login" [formGroup]="loginForm" (ngSubmit)="handleLogin()">
     <div class="login-body">
       <section class="title">
         <div class="welcome">Login</div>
@@ -14,7 +14,7 @@
             name="username"
             clrInput
             placeholder="Enter e-mail"
-            [(ngModel)]="form.username"
+            formControlName="email"
           />
         </clr-input-container>
         <clr-password-container>
@@ -25,13 +25,20 @@
             name="password"
             clrPassword
             placeholder="Enter password"
-            [(ngModel)]="form.password"
+            formControlName="password"
           />
         </clr-password-container>
-        <clr-checkbox-wrapper>
-          <label>Remember me</label>
-          <input type="checkbox" name="rememberMe" clrCheckbox [(ngModel)]="form.rememberMe" />
-        </clr-checkbox-wrapper>
+
+        @if (errorMessage !=="") {
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        }
+
+<!--        <clr-checkbox-wrapper>-->
+<!--          <label>Remember me</label>-->
+<!--          <input type="checkbox" name="rememberMe" clrCheckbox [(ngModel)]="form.rememberMe" />-->
+<!--        </clr-checkbox-wrapper>-->
 <!--        <div class="error active">Invalid user name or password</div>-->
         <button type="submit" class="btn btn-primary">Log in</button>
         <a href="/register" class="signup">Sign up for an account</a>

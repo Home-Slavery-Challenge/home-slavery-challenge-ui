@@ -1,6 +1,6 @@
 
 <div class="login-wrapper">
-  <form class="login" (ngSubmit)="handleRegister()">
+    <form class="login" [formGroup]="registerForm" (ngSubmit)="handleRegister()">
     <div class="login-body">
       <section class="title">
         <div class="welcome">Register</div>
@@ -14,7 +14,7 @@
             name="username"
             clrInput
             placeholder="Enter username"
-            [(ngModel)]="form.username"
+            formControlName="username"
           />
         </clr-input-container>
         <clr-input-container>
@@ -25,7 +25,7 @@
             name="email"
             clrInput
             placeholder="Enter e-mail"
-            [(ngModel)]="form.email"
+            formControlName="email"
           />
         </clr-input-container>
         <clr-password-container>
@@ -36,9 +36,10 @@
             name="password"
             clrPassword
             placeholder="Enter password"
-            [(ngModel)]="form.password"
+            formControlName="password"
           />
         </clr-password-container>
+
         <clr-password-container>
           <label class="clr-sr-only">Confirm Password</label>
           <input
@@ -47,10 +48,18 @@
             name="confirm-password"
             clrPassword
             placeholder="Confirm password"
-            [(ngModel)]="form.confirmPassword"
+            formControlName="confirmPassword"
           />
         </clr-password-container>
-        <!--        <div class="error active">Invalid user name or password</div>-->
+
+
+        @if (errorMessage !=="") {
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        }
+
+
         <button type="submit" class="btn btn-primary">Register</button>
         <a href="/login" class="signup">Back to Login</a>
       </div>
