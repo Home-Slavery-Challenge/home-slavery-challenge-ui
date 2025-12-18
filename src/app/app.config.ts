@@ -4,6 +4,7 @@ import {provideRouter} from '@angular/router';
 import {routes} from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
+import {environment} from '../environments/environment';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -18,7 +19,7 @@ export const appConfig: ApplicationConfig = {
         config: {
           tokenGetter: tokenGetter,
           // TODO : env
-          allowedDomains: ["http://localhost:8080"],
+          allowedDomains: [`${environment.apiUrl}`],
           disallowedRoutes: [""],
         },
       }),

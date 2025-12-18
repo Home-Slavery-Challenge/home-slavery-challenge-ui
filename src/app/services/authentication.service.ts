@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {FormGroup} from '@angular/forms';
 import {JwtHelperService} from '@auth0/angular-jwt';
+import {apiLogin} from '../config';
 
 
 @Injectable({
@@ -13,9 +13,10 @@ export class AuthenticationService {
   public isLoggedIn = false;
   public roles: string[] = [];
   public token: string | undefined;
+
   // public registeredUser: UserClass = new UserClass()
 
-  constructor(private http: HttpClient,private jwtHelper: JwtHelperService, private router: Router) {
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router) {
   }
 
   // setRegisteredUser(user: UserClass) {
@@ -37,14 +38,14 @@ export class AuthenticationService {
   }
 
   login(user: any) {
-    // TODO:env
-    return this.http.post<any>("http://localhost:8080/api/login", user, {observe: 'response'});
+    return this.http.post<any>(`${apiLogin}`, user, {observe: 'response'});
   }
 
   getToken() {
     this.restoreAuth()
     return this.jwtHelper.tokenGetter()
   }
+
   //
   // isTokenExpired(): Boolean {
   //   return this.jwtHelper.isTokenExpired(this.token!);
@@ -58,6 +59,7 @@ export class AuthenticationService {
     this.roles = decodedToken.roles;
     this.loggedUser = decodedToken.sub;
   }
+
   //
   saveToken(jwt: string) {
     localStorage.setItem('jwt', jwt.split('Bearer ')[1]);
@@ -65,6 +67,7 @@ export class AuthenticationService {
     this.isLoggedIn = true
     this.decodeJWT();
   }
+
   //
   // loadToken() {
   //   this.token = localStorage.getItem('jwt')!;
@@ -81,6 +84,7 @@ export class AuthenticationService {
       return false;
     return ['ADMIN', 'USER'].some(role => this.roles.includes(role));
   }
+
   //
   // registerUser(user: UserClass) {
   //   return this.http.post(`${apiAuth}/register`, user, {observe: 'response'})
@@ -94,6 +98,7 @@ export class AuthenticationService {
     localStorage.removeItem('jwt');
     this.router.navigate(['/']);
   }
+
   //
   // validateEmail(code: string){
   //   return this.http.get<UserClass>(`${apiAuth}/verify-email/${code}`)
