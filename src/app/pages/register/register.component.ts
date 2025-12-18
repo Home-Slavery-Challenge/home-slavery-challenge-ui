@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
-import { ReactiveFormsModule, FormControl, FormGroup, Validators } from '@angular/forms';
-import { ClrCheckboxModule, ClrCommonFormsModule, ClrInputModule, ClrPasswordModule } from '@clr/angular';
+import {Component} from '@angular/core';
+import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ClrCheckboxModule, ClrCommonFormsModule, ClrInputModule, ClrPasswordModule} from '@clr/angular';
 import {checkRegisterFields} from './methods';
+import {AuthenticationService} from '../../services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +20,10 @@ import {checkRegisterFields} from './methods';
 })
 export class RegisterComponent {
 
-  errorMessage: string=""
+  constructor(private authService: AuthenticationService, private router: Router) {
+  }
+
+  errorMessage: string = ""
 
   registerForm = new FormGroup({
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -29,7 +34,18 @@ export class RegisterComponent {
 
   handleRegister() {
     this.errorMessage = checkRegisterFields(this.registerForm);
-    console.log(this.registerForm.value);
-    console.log(this.registerForm.valid);
+    if (this.errorMessage !== "") {
+      return
+    }
+
+    this.authService.registerUser(this.registerForm.value).subscribe({
+      next: (data) => {
+        this.router.navigate(["/email-verification"])
+      },
+      error: (err: any) => {
+        this.errorMessage = "Error during register, verify fields !";
+      }
+    });
+
   }
 }

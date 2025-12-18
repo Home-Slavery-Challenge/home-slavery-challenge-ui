@@ -5,6 +5,7 @@ import {routes} from './app.routes';
 import {provideHttpClient} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
 import {environment} from '../environments/environment';
+import {provideToastr} from 'ngx-toastr';
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -14,11 +15,11 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes), provideHttpClient(),
+    provideToastr(),
     importProvidersFrom(
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,
-          // TODO : env
           allowedDomains: [`${environment.apiUrl}`],
           disallowedRoutes: [""],
         },

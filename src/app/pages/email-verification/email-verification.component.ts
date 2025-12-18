@@ -1,0 +1,75 @@
+import {Component, OnInit} from '@angular/core';
+import {UserClass} from '../../models/user';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
+import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {ClrCommonFormsModule, ClrInputModule, ClrPasswordModule} from '@clr/angular';
+import {checkMailVerifcationFields} from './methods';
+
+@Component({
+  selector: 'app-email-verification',
+  imports: [
+    FormsModule,
+    ClrCommonFormsModule,
+    ClrInputModule,
+    ClrPasswordModule,
+    ReactiveFormsModule
+  ],
+  templateUrl: './email-verification.component.html',
+  styleUrl: './email-verification.component.css'
+})
+
+export class EmailVerificationComponent implements OnInit {
+
+  user: UserClass = new UserClass();
+  errorMessage = "";
+
+  constructor(
+    private route: ActivatedRoute,
+    private authService: AuthenticationService,
+    private router: Router,
+  ) {
+  }
+
+  ngOnInit(): void {
+    this.user = this.authService.getRegisteredUser();
+  }
+
+
+  verifForm = new FormGroup({
+    code: new FormControl('', [Validators.required]),
+  });
+
+  onValidateEmail(){
+    this.errorMessage = checkMailVerifcationFields(this.verifForm);
+    if (this.errorMessage !== "") {
+      return
+    }
+
+    this.authService.validateEmail(this.verifForm.value).subscribe({
+      next: (res) => {
+        // TODO : Fix auto login !!
+        this.authService.login(this.user).subscribe({
+          next: (data) => {
+            let jwtToken = data.headers.get("Authorization")!;
+            this.authService.saveToken(jwtToken);
+            this.router.navigate(["/"]);
+          },error:(err:any) => {
+            console.log(err)
+          }
+        })
+      },
+      error:(err:any) => {
+
+        if((err.error.errorCode === "INVALID_TOKEN")){
+          this.errorMessage = "Votre code n'est pas valide !"
+        }
+
+        if((err.error.errorCode === "EXPIRED_TOKEN")){
+          this.errorMessage = "Votre code à expiré !"
+        }
+      }
+    })
+  }
+
+}

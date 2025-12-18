@@ -30,7 +30,6 @@ export class LoginComponent {
       return
     }
 
-
     this.authService.login(this.loginForm.value).subscribe({
       next: (data) => {
         let jwToken = data.headers.get('Authorization')!;

@@ -1,0 +1,32 @@
+<div class="login-wrapper">
+  <form class="login" [formGroup]="verifForm" (ngSubmit)="onValidateEmail()">
+    <div class="login-body">
+      <section class="title">
+        <div class="welcome">Mail Confirmation</div>
+      </section>
+      <div class="login-group">
+        <clr-input-container>
+          <label class="clr-sr-only">Email Code</label>
+          <input
+            type="text"
+            autocomplete="code"
+            name="code"
+            clrInput
+            placeholder="Enter code"
+            formControlName="code"
+          />
+        </clr-input-container>
+
+        @if (errorMessage !=="") {
+          <div class="alert alert-danger">
+            {{ errorMessage }}
+          </div>
+        }
+        <button type="button"  class="btn btn-primary" (click)="onValidateEmail()">Confirm</button>
+
+        <a href="/" class="signup">Back Home</a>
+      </div>
+    </div>
+  </form>
+</div>
+
