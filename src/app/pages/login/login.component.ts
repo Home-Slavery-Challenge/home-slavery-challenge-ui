@@ -2,6 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ClrDropdownModule, ClrFormsModule} from '@clr/angular';
 import {checkLoginFields} from './methods';
+import {HttpClient} from '@angular/common/http';
+import {AuthenticationService} from '../../services/authentication.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -9,22 +12,38 @@ import {checkLoginFields} from './methods';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit {
-  ngOnInit(): void {
-    console.log(this.loginForm);
+export class LoginComponent {
+
+  constructor(private authService: AuthenticationService, private router: Router) {
   }
 
   errorMessage: string = ""
 
   loginForm = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(25)]),
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
   handleLogin() {
     this.errorMessage = checkLoginFields(this.loginForm);
-    console.log(this.loginForm.value);
-    console.log(this.loginForm.valid);
+    // if (this.errorMessage !== "") {
+    //   return
+    // }
+
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (data) => {
+        let jwToken = data.headers.get('Authorization')!;
+        this.authService.saveToken(jwToken);
+        this.router.navigate(['/']);
+      },
+      error: (err: any) => {
+        console.log(err);
+      }
+    });
+
+    // console.log(this.loginForm.value);
+    // console.log(this.loginForm.valid);
   }
 
 }

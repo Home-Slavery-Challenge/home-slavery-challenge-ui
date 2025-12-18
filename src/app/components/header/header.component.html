@@ -14,8 +14,13 @@
       </a>
     </div>
     <div class="header-actions">
+      @if(this.authService.isAuthenticated()){
+      <a (click)="handleLogout()" href="" class="nav-link nav-text">Log Out</a>
+      } @else {
+
       <a href="/login" class="nav-link nav-text">Log In</a>
       <a href="/register" class="nav-link nav-text">Register</a>
+      }
     </div>
   </header>
 }
