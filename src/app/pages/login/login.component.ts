@@ -26,9 +26,9 @@ export class LoginComponent {
 
   handleLogin() {
     this.errorMessage = checkLoginFields(this.loginForm);
-    // if (this.errorMessage !== "") {
-    //   return
-    // }
+    if (this.errorMessage !== "") {
+      return
+    }
 
 
     this.authService.login(this.loginForm.value).subscribe({
@@ -38,12 +38,9 @@ export class LoginComponent {
         this.router.navigate(['/']);
       },
       error: (err: any) => {
-        console.log(err);
+        this.errorMessage = "Error during login, verify username and password !";
       }
     });
-
-    // console.log(this.loginForm.value);
-    // console.log(this.loginForm.valid);
   }
 
 }
