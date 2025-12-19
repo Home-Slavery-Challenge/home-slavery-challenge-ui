@@ -23,6 +23,7 @@ export class EmailVerificationComponent implements OnInit {
 
   user: UserClass = new UserClass();
   errorMessage = "";
+  emailValidated = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -48,16 +49,7 @@ export class EmailVerificationComponent implements OnInit {
 
     this.authService.validateEmail(this.verifForm.value).subscribe({
       next: (res) => {
-        // TODO : Fix auto login !!
-        this.authService.login(this.user).subscribe({
-          next: (data) => {
-            let jwtToken = data.headers.get("Authorization")!;
-            this.authService.saveToken(jwtToken);
-            this.router.navigate(["/"]);
-          },error:(err:any) => {
-            console.log(err)
-          }
-        })
+this.emailValidated = true;
       },
       error:(err:any) => {
 

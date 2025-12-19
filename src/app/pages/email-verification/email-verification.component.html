@@ -2,30 +2,40 @@
   <form class="login" [formGroup]="verifForm" (ngSubmit)="onValidateEmail()">
     <div class="login-body">
       <section class="title">
-        <div class="welcome">Mail Confirmation</div>
+        <div class="welcome">Confirmation</div>
       </section>
-      <div class="login-group">
-        <clr-input-container>
-          <label class="clr-sr-only">Email Code</label>
-          <input
-            type="text"
-            autocomplete="code"
-            name="code"
-            clrInput
-            placeholder="Enter code"
-            formControlName="code"
-          />
-        </clr-input-container>
 
-        @if (errorMessage !=="") {
-          <div class="alert alert-danger">
-            {{ errorMessage }}
-          </div>
-        }
-        <button type="button"  class="btn btn-primary" (click)="onValidateEmail()">Confirm</button>
+      @if (!emailValidated) {
+          <h3>Validated</h3>
+          <a href="/" class="signup">Back Home</a>
+          <a href="/login" class="signup">Login</a>
 
-        <a href="/" class="signup">Back Home</a>
-      </div>
+      } @else {
+        <div class="login-group">
+
+          <clr-input-container>
+            <label class="clr-sr-only">Email Code</label>
+            <input
+              type="text"
+              autocomplete="code"
+              name="code"
+              clrInput
+              placeholder="Enter code"
+              formControlName="code"
+            />
+          </clr-input-container>
+          @if (errorMessage !== "") {
+            <div class="alert alert-danger">
+              {{ errorMessage }}
+            </div>
+          }
+          <button type="button" class="btn btn-primary" (click)="onValidateEmail()">Confirm</button>
+
+          <a href="/" class="signup">Back Home</a>
+        </div>
+      }
+
+
     </div>
   </form>
 </div>
