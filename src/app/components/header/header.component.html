@@ -1,25 +1,31 @@
-@if (light) {
-  <header>
-    <div class="branding">
-      <a href="" class="nav-link">
-        <span class="title">Clarity Design</span>
-      </a>
-    </div>
-  </header>
-} @else {
-  <header class="header-6">
-    <div class="branding">
-      <a href="" class="nav-link">
-        <span class="title">Clarity Design</span>
-      </a>
-    </div>
-    <div class="header-actions">
-      @if (this.authService.isAuthenticated()) {
-        <a (click)="handleLogout()" href="" class="nav-link nav-text">Log Out</a>
-      } @else {
-        <a href="/login" class="nav-link nav-text">Log In</a>
-        <a href="/register" class="nav-link nav-text">Register</a>
-      }
-    </div>
-  </header>
-}
+<header class="header-6">
+  <div class="branding">
+    <a href="" class="nav-link">
+      <span class="title">Clarity Design</span>
+    </a>
+  </div>
+  <div class="header-actions">
+    @if (authService.isAuthenticated()) {
+      <clr-dropdown [clrCloseMenuOnItemClick]="false">
+        <button clrDropdownTrigger aria-label="Dropdown demo button">
+          <cds-icon shape="bars" direction="down"></cds-icon>
+        </button>
+        <clr-dropdown-menu *clrIfOpen>
+          <label class="dropdown-header" aria-hidden="true">Menu</label>
+          <!--          <div clrDropdownItem>Admin</div>-->
+          <!--          <div class="dropdown-divider" role="separator" aria-hidden="true"></div>-->
+              <div clrDropdownItem (click)="handleProfil()">
+                Profil
+              </div>
+          <div class="dropdown-divider" role="separator" aria-hidden="true"></div>
+          <div clrDropdownItem>Boarding</div>
+        </clr-dropdown-menu>
+      </clr-dropdown>
+
+      <a (click)="handleLogout()" href="" class="nav-link nav-text">Log Out</a>
+    } @else {
+      <a href="/login" class="nav-link nav-text">Log In</a>
+      <a href="/register" class="nav-link nav-text">Register</a>
+    }
+  </div>
+</header>

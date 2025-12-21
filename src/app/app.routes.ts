@@ -4,6 +4,10 @@ import {LoginComponent} from './pages/login/login.component';
 import {RegisterComponent} from './pages/register/register.component';
 import {MainLayoutComponent} from './components/main-layout/main-layout.component';
 import {EmailVerificationComponent} from './pages/email-verification/email-verification.component';
+import {ProfilComponent} from './pages/profil/profil.component';
+import {SupportComponent} from './pages/profil/support/support.component';
+import {FriendsComponent} from './pages/profil/friends/friends.component';
+import {ProfilInfoComponent} from './pages/profil/profil-info/profil-info.component';
 
 export const routes: Routes = [
   {
@@ -14,6 +18,14 @@ export const routes: Routes = [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'email-verification', component: EmailVerificationComponent},
+      {
+        path: 'profil', component: ProfilComponent, children: [
+          {path: '', redirectTo: 'info', pathMatch: 'full'},
+          {path: 'info', component: ProfilInfoComponent},
+          {path: 'friends', component: FriendsComponent},
+          {path: 'support', component: SupportComponent},
+        ]
+      },
     ],
   },
 ];

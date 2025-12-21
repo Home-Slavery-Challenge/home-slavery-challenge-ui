@@ -6,6 +6,9 @@ import {provideHttpClient} from '@angular/common/http';
 import {JwtModule} from '@auth0/angular-jwt';
 import {environment} from '../environments/environment';
 import {provideToastr} from 'ngx-toastr';
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {ClarityModule} from "@clr/angular";
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -16,6 +19,10 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({eventCoalescing: true}),
     provideRouter(routes), provideHttpClient(),
     provideToastr(),
+    BrowserModule,
+    BrowserAnimationsModule,
+    ClarityModule,
+
     importProvidersFrom(
       JwtModule.forRoot({
         config: {
@@ -25,5 +32,5 @@ export const appConfig: ApplicationConfig = {
         },
       }),
     ),
-  ]
+  ],
 };
