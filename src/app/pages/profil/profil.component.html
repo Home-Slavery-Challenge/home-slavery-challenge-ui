@@ -5,9 +5,16 @@
       <router-outlet/>
     </div>
     <clr-vertical-nav>
-      <a clrVerticalNavLink href="/profil/info" class="active">Profil</a>
-      <a clrVerticalNavLink href="/profil/friends">Friends</a>
-      <a clrVerticalNavLink href="/profil/support">Support</a>
+      @for (s of sectionArray; track s.path) {
+        <a
+          clrVerticalNavLink
+          [routerLink]="s.path"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          {{ s.title }}
+        </a>
+      }
     </clr-vertical-nav>
   </div>
 </div>
