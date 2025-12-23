@@ -1,1 +1,10 @@
-<p>friends works!</p>
+
+@if (friends.length>0){
+  @for (f of friends; track f.id){
+    <p>{{f.id}}</p>
+  }
+} @else {
+  <p>No friends for the moment</p>
+}
+
+<app-find-friends/>
