@@ -1,0 +1,31 @@
+<button type="button" class="btn btn-primary" (click)="openModal()">Pending</button>
+<clr-modal [(clrModalOpen)]="findModal">
+  <h3 class="modal-title">Pending Friendship</h3>
+  <div class="modal-body">
+    <clr-datagrid>
+      <clr-dg-column>Name</clr-dg-column>
+      <clr-dg-row *clrDgItems="let f of ((friendships$| async) ?? [])" [clrDgItem]="f">
+        <clr-dg-cell>{{ f.receiver.username }}
+          <a (click)="declineRequest(f.id)">
+            X
+          </a>
+        </clr-dg-cell>
+        <clr-dg-cell>
+          <span class="color-square"></span>
+        </clr-dg-cell>
+      </clr-dg-row>
+      <!--      <clr-dg-footer>{{ friendships$.length }} users</clr-dg-footer>-->
+    </clr-datagrid>
+    <app-alert
+      [alert]="messageAlert.alert"
+      [type]="messageAlert.type"
+      [message]="messageAlert.message">
+    </app-alert>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" (click)="findModal = false">Close</button>
+  </div>
+</clr-modal>
+
+

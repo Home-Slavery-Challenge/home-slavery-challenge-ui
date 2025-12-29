@@ -1,20 +1,68 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {apiFriendship, apiLogin} from '../config';
+import {apiFriendship} from '../config';
+import {BehaviorSubject, switchMap, tap} from 'rxjs';
+
+export type UserLite = { id: number; username: string };
+export type FriendshipLite =  { id: number, receiver: { id: number, username: string } }
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class FriendshipService {
+  private usersSubject = new BehaviorSubject<UserLite[]>([]);
+  private friendshipSubject = new BehaviorSubject<FriendshipLite[]>([]);
+  users$ = this.usersSubject.asObservable();
+  friendship$ = this.friendshipSubject.asObservable();
 
-  constructor(private http: HttpClient) {}
-
-  getFriendships() {
-    return this.http.get<any>(`${apiFriendship}/friends`);
+  constructor(private http: HttpClient) {
   }
 
-  searchByName(str:string) {
-    return this.http.get<any>(`${apiFriendship}/search-by-name/${str}`);
+  /** charge tous les amis d'un user */
+  loadUserFriendships() {
+    return this.http.get<UserLite[]>(`${apiFriendship}/friends`).pipe(
+      tap(users => this.usersSubject.next(users))
+    );
+  }
+
+  /** recherche par nom */
+  searchByName(str: string) {
+    return this.http.get<UserLite[]>(`${apiFriendship}/search-by-name/${str}`).pipe(
+      tap(users => this.usersSubject.next(users))
+    );
+  }
+
+  sendFriendshipRequest(id: number) {
+    return this.http.post<UserLite[]>(`${apiFriendship}/create/${id}`, {observe: 'response'})
+  }
+
+
+  sendFriendshipBlockRequest(id: number) {
+    return this.http.post<any>(`${apiFriendship}/block-user/${id}`, {observe: 'response'});
+  }
+
+  getFriendshipPendingRequest() {
+    return this.http.get<any>(`${apiFriendship}/pending-sent`).pipe(
+      tap(friendship => this.friendshipSubject.next(friendship))
+    );
+  }
+
+  // getBlockedFriendship() {
+  //   return this.http.get<FriendshipLite[]>(`${apiFriendship}/blocked`).pipe(
+  //     tap(friendship => this.friendshipSubject.next(friendship))
+  //   )
+  // }
+
+
+  unblockFriendship(id: number) {
+    return this.http.post<any>(`${apiFriendship}/unblock-user/${id}`, {observe: 'response'});
+  }
+
+
+  declineRequest(friendshipId: number) {
+    return this.http.post<any>(`${apiFriendship}/decline/${friendshipId}`, {observe: 'response'});
+
   }
 
 }
