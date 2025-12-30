@@ -11,9 +11,11 @@ export type FriendshipLite =  { id: number, receiver: { id: number, username: st
   providedIn: 'root'
 })
 export class FriendshipService {
-  private usersSubject = new BehaviorSubject<UserLite[]>([]);
+  private usersFindSubject = new BehaviorSubject<UserLite[]>([]);
+  private usersBlockedSubject = new BehaviorSubject<UserLite[]>([]);
   private friendshipSubject = new BehaviorSubject<FriendshipLite[]>([]);
-  users$ = this.usersSubject.asObservable();
+  usersFind$ = this.usersFindSubject.asObservable();
+  usersBlocked$ = this.usersBlockedSubject.asObservable();
   friendship$ = this.friendshipSubject.asObservable();
 
   constructor(private http: HttpClient) {
@@ -22,14 +24,14 @@ export class FriendshipService {
   /** charge tous les amis d'un user */
   loadUserFriendships() {
     return this.http.get<UserLite[]>(`${apiFriendship}/friends`).pipe(
-      tap(users => this.usersSubject.next(users))
+      tap(users => this.usersFindSubject.next(users))
     );
   }
 
   /** recherche par nom */
   searchByName(str: string) {
     return this.http.get<UserLite[]>(`${apiFriendship}/search-by-name/${str}`).pipe(
-      tap(users => this.usersSubject.next(users))
+      tap(users => this.usersFindSubject.next(users))
     );
   }
 
@@ -48,11 +50,11 @@ export class FriendshipService {
     );
   }
 
-  // getBlockedFriendship() {
-  //   return this.http.get<FriendshipLite[]>(`${apiFriendship}/blocked`).pipe(
-  //     tap(friendship => this.friendshipSubject.next(friendship))
-  //   )
-  // }
+  getBlockedFriendship() {
+    return this.http.get<UserLite[]>(`${apiFriendship}/blocked`).pipe(
+      tap(users => this.usersBlockedSubject.next(users))
+    )
+  }
 
 
   unblockFriendship(id: number) {

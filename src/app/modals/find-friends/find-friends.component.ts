@@ -41,7 +41,7 @@ export class FindFriendsComponent implements OnInit {
   constructor(private friendshipService: FriendshipService) {}
 
   ngOnInit() {
-    this.users$ = this.friendshipService.users$;
+    this.users$ = this.friendshipService.usersFind$;
     this.friendshipService.loadUserFriendships().subscribe();
   }
 
