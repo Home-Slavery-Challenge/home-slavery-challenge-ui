@@ -63,8 +63,7 @@ export class FriendshipService {
 
 
   declineRequest(friendshipId: number) {
-    return this.http.post<any>(`${apiFriendship}/decline/${friendshipId}`, {observe: 'response'});
-
+    return this.http.post<any>(`${apiFriendship}/decline-friendship/${friendshipId}`, {observe: 'response'});
   }
 
 }

@@ -1,34 +1,64 @@
+import { AsyncPipe } from '@angular/common';
+import {FriendshipService, UserLite} from '../../../services/friendship.service';
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {FriendshipService} from '../../../services/friendship.service';
-import {ClrButtonGroupModule, ClrModalModule} from '@clr/angular';
+import {Observable} from 'rxjs';
+import {ClrButtonGroupModule, ClrDatagridModule, ClrModalModule} from '@clr/angular';
 import {FindFriendsComponent} from '../../../modals/find-friends/find-friends.component';
 import {PendingFriendsComponent} from '../../../modals/pending-friends/pending-friends.component';
 import {BlockedFriendsComponent} from '../../../modals/blocked-friends/blocked-friends.component';
+import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
 
 @Component({
   selector: 'app-friends',
   imports: [
+    AsyncPipe,
     ClrButtonGroupModule,
     ClrModalModule,
     FindFriendsComponent,
     PendingFriendsComponent,
-    BlockedFriendsComponent
+    BlockedFriendsComponent,
+    ClrDatagridModule,
+    AlertComponent
   ],
   templateUrl: './friends.component.html',
   styleUrl: './friends.component.css'
 })
 export class FriendsComponent implements OnInit {
+  users$!: Observable<UserLite[]>;
+  messageAlert = { alert: true, type: 'info' as AlertType, message: '' };
 
-  friends:any[]=[]
-
-
-  constructor(private friendshipService: FriendshipService) {
-  }
+  constructor(private friendshipService: FriendshipService) {}
 
   ngOnInit(): void {
-        // this.friendshipService.getFriendships();
-    }
+    this.users$ = this.friendshipService.usersFind$;
+    this.friendshipService.loadUserFriendships().subscribe();
+  }
+
+  decline(userId: number) {
+    this.friendshipService.declineRequest(userId).subscribe({
+      next: () => {
+        this.friendshipService.loadUserFriendships().subscribe();
+        this.setAlert(false,"warning", "Friendship Blocked")
+      }
+    });
+  }
+
+
+  block(userId: any) {
+    this.friendshipService.sendFriendshipBlockRequest(userId).subscribe({
+      next: () => {
+        this.friendshipService.loadUserFriendships().subscribe();
+        this.setAlert(false,"warning", "Friendship Declined")
+      }
+    });
+  }
+
+  setAlert(alert: boolean, type: AlertType, message: string) {
+    this.messageAlert.alert = alert;
+    this.messageAlert.type = type;
+    this.messageAlert.message = message;
+  }
+
 
 
 }
