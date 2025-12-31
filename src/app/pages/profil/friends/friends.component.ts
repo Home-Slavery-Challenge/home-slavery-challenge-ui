@@ -7,6 +7,7 @@ import {FindFriendsComponent} from '../../../modals/find-friends/find-friends.co
 import {PendingFriendsComponent} from '../../../modals/pending-friends/pending-friends.component';
 import {BlockedFriendsComponent} from '../../../modals/blocked-friends/blocked-friends.component';
 import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
+import { TitleCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-friends',
@@ -18,7 +19,8 @@ import {AlertComponent, AlertType} from '../../../components/alert/alert.compone
     PendingFriendsComponent,
     BlockedFriendsComponent,
     ClrDatagridModule,
-    AlertComponent
+    AlertComponent,
+    TitleCasePipe
   ],
   templateUrl: './friends.component.html',
   styleUrl: './friends.component.css'
@@ -30,12 +32,12 @@ export class FriendsComponent implements OnInit {
   constructor(private friendshipService: FriendshipService) {}
 
   ngOnInit(): void {
-    this.users$ = this.friendshipService.usersFind$;
+    this.users$ = this.friendshipService.friends$;
     this.friendshipService.loadUserFriendships().subscribe();
   }
 
   decline(userId: number) {
-    this.friendshipService.declineRequest(userId).subscribe({
+    this.friendshipService.declineFriendship(userId).subscribe({
       next: () => {
         this.friendshipService.loadUserFriendships().subscribe();
         this.setAlert(false,"warning", "Friendship Blocked")
@@ -58,7 +60,4 @@ export class FriendsComponent implements OnInit {
     this.messageAlert.type = type;
     this.messageAlert.message = message;
   }
-
-
-
 }

@@ -5,14 +5,11 @@
     <clr-datagrid>
       <clr-dg-column>Name</clr-dg-column>
       <clr-dg-row *clrDgItems="let f of ((friendships$| async) ?? [])" [clrDgItem]="f">
-        <clr-dg-cell>{{ f.receiver.username }}
-          <a (click)="declineRequest(f.id)">
-            X
-          </a>
+        <clr-dg-cell>{{ f.receiver.username | titlecase }}
         </clr-dg-cell>
-        <clr-dg-cell>
-          <span class="color-square"></span>
-        </clr-dg-cell>
+        <clr-dg-action-overflow>
+          <button class="action-item" (click)="declineRequest(f.id)">Decline</button>
+        </clr-dg-action-overflow>
       </clr-dg-row>
       <!--      <clr-dg-footer>{{ friendships$.length }} users</clr-dg-footer>-->
     </clr-datagrid>

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrCommonFormsModule, ClrDatagridModule, ClrIconModule, ClrInputModule, ClrModalModule} from "@clr/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FriendshipLite, FriendshipService, UserLite} from '../../services/friendship.service';
+import {FriendshipService, UserLite} from '../../services/friendship.service';
 import {Observable} from 'rxjs';
 import {AlertComponent, AlertType} from '../../components/alert/alert.component';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, TitleCasePipe} from '@angular/common';
 
 @Component({
   selector: 'app-blocked-friends',
@@ -17,7 +17,8 @@ import {AsyncPipe} from '@angular/common';
     FormsModule,
     ReactiveFormsModule,
     AlertComponent,
-    AsyncPipe
+    AsyncPipe,
+    TitleCasePipe
   ],
   templateUrl: './blocked-friends.component.html',
   styleUrl: './blocked-friends.component.css'
@@ -25,7 +26,7 @@ import {AsyncPipe} from '@angular/common';
 export class BlockedFriendsComponent implements OnInit {
   findModal = false;
   users$!: Observable<UserLite[]>;
-  messageAlert = { alert: true, type: 'info' as AlertType, message: '' };
+  messageAlert = {alert: true, type: 'info' as AlertType, message: ''};
 
   constructor(private friendshipService: FriendshipService) {
   }
@@ -35,17 +36,17 @@ export class BlockedFriendsComponent implements OnInit {
     this.friendshipService.getBlockedFriendship().subscribe();
   }
 
-  openModal(){
+  openModal() {
     this.findModal = true
     this.friendshipService.getBlockedFriendship().subscribe();
     this.users$ = this.friendshipService.usersBlocked$;
   }
 
-  unblock(userIdReceiver:number){
+  unblock(userIdReceiver: number) {
     this.friendshipService.unblockFriendship(userIdReceiver).subscribe({
       next: data => {
         this.friendshipService.getBlockedFriendship().subscribe();
-        this.setAlert(false,"success", "Friendship request cancelled");
+        this.setAlert(false, "success", "Friendship request cancelled");
       }
     })
   }

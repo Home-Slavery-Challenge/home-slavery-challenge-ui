@@ -13,28 +13,15 @@
     <clr-datagrid>
       <clr-dg-column>Name</clr-dg-column>
       <clr-dg-row *clrDgItems="let user of ((users$ | async) ?? [])" [clrDgItem]="user">
-        <clr-dg-cell>{{ user.username }}
-          <a (click)="add(user.id)" >
-            <cds-icon shape="plus"></cds-icon>
-          </a>
-          <a (click)="block(user.id)" >
-            <cds-icon shape="ban"></cds-icon>
-          </a>
+        <clr-dg-cell>{{ user.username | titlecase }}
         </clr-dg-cell>
-        <clr-dg-cell>
-          <span class="color-square"></span>
-        </clr-dg-cell>
+        <clr-dg-action-overflow>
+          <button class="action-item" (click)="add(user.id)">Add</button>
+          <button class="action-item" (click)="block(user.id)">Block</button>
+        </clr-dg-action-overflow>
       </clr-dg-row>
 <!--      <clr-dg-footer>{{ friendshipService.users.length}} users</clr-dg-footer>-->
     </clr-datagrid>
-
-
-<!--  <clr-alert [(clrAlertClosed)]="messageAlert.alert"  [clrAlertType]="messageAlert.type">-->
-<!--    <clr-alert-item>-->
-<!--      <span class="alert-text">{{ messageAlert.message }}</span>-->
-<!--    </clr-alert-item>-->
-<!--  </clr-alert>-->
-
     <app-alert
       [alert]="messageAlert.alert"
       [type]="messageAlert.type"

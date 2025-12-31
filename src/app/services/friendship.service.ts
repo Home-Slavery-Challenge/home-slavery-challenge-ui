@@ -11,9 +11,11 @@ export type FriendshipLite =  { id: number, receiver: { id: number, username: st
   providedIn: 'root'
 })
 export class FriendshipService {
+  private friendsSubject = new BehaviorSubject<UserLite[]>([]);
   private usersFindSubject = new BehaviorSubject<UserLite[]>([]);
   private usersBlockedSubject = new BehaviorSubject<UserLite[]>([]);
   private friendshipSubject = new BehaviorSubject<FriendshipLite[]>([]);
+  friends$ = this.friendsSubject.asObservable();
   usersFind$ = this.usersFindSubject.asObservable();
   usersBlocked$ = this.usersBlockedSubject.asObservable();
   friendship$ = this.friendshipSubject.asObservable();
@@ -24,7 +26,7 @@ export class FriendshipService {
   /** charge tous les amis d'un user */
   loadUserFriendships() {
     return this.http.get<UserLite[]>(`${apiFriendship}/friends`).pipe(
-      tap(users => this.usersFindSubject.next(users))
+      tap(users => this.friendsSubject.next(users))
     );
   }
 
@@ -62,8 +64,12 @@ export class FriendshipService {
   }
 
 
-  declineRequest(friendshipId: number) {
+  declineFriendship(friendshipId: number) {
     return this.http.post<any>(`${apiFriendship}/decline-friendship/${friendshipId}`, {observe: 'response'});
+  }
+
+  declinePendingSendRequest(friendshipId: number) {
+    return this.http.post<any>(`${apiFriendship}/decline-request/${friendshipId}`, {observe: 'response'});
   }
 
 }

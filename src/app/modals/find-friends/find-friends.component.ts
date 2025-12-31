@@ -1,21 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrAlertModule, ClrDatagridModule, ClrInputModule, ClrModalModule} from "@clr/angular";
 import {FormsModule} from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
 import {FriendshipService, UserLite} from '../../services/friendship.service';
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {Observable} from 'rxjs';
 import {AlertComponent, AlertType} from '../../components/alert/alert.component';
-
-// TODO : Quand je cherche un user, je ne devrais pas apparaitre dans la liste de recherche, checker back
-
-
-
-
-// TODO : Backend recueprer tous les friendship username + statut
-// - modifier en base ou ajoute rune friend ship a vec un statut different, , merge l'object dan el backend,afficher la liste avec des icons correcpondant, blocké ou non, demande amis en attente ou non, ou alors juste amis
-
-
 
 @Component({
   selector: 'app-find-friends',
@@ -35,26 +24,24 @@ export class FindFriendsComponent implements OnInit {
   findModal = false;
   inputSearch = "";
   users$!: Observable<UserLite[]>;
+  messageAlert = {alert: true, type: 'info' as AlertType, message: ''};
 
-  messageAlert = { alert: true, type: 'info' as AlertType, message: '' };
-
-  constructor(private friendshipService: FriendshipService) {}
+  constructor(private friendshipService: FriendshipService) {
+  }
 
   ngOnInit() {
     this.users$ = this.friendshipService.usersFind$;
-    this.friendshipService.loadUserFriendships().subscribe();
   }
 
   updateSearchField() {
     this.users$ = this.friendshipService.searchByName(this.inputSearch)
   }
 
-
   add(userId: any) {
     this.friendshipService.sendFriendshipRequest(userId).subscribe({
       next: () => {
         this.users$ = this.friendshipService.searchByName(this.inputSearch)
-        this.setAlert(false,"success", "Friendship Added")
+        this.setAlert(false, "success", "Friendship Added")
       }
     });
   }
@@ -63,7 +50,7 @@ export class FindFriendsComponent implements OnInit {
     this.friendshipService.sendFriendshipBlockRequest(userId).subscribe({
       next: () => {
         this.users$ = this.friendshipService.searchByName(this.inputSearch)
-        this.setAlert(false,"warning", "Friendship Blocked")
+        this.setAlert(false, "warning", "Friendship Blocked")
       }
     });
   }

@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {ClrAlertModule, ClrDatagridModule, ClrModalModule} from "@clr/angular";
-import {FriendshipLite, FriendshipService, UserLite} from '../../services/friendship.service';
+import {FriendshipLite, FriendshipService} from '../../services/friendship.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe} from '@angular/common';
+import {AsyncPipe, TitleCasePipe} from '@angular/common';
 import {AlertComponent, AlertType} from '../../components/alert/alert.component';
 
 @Component({
@@ -13,28 +13,30 @@ import {AlertComponent, AlertType} from '../../components/alert/alert.component'
     AsyncPipe,
     ClrAlertModule,
     AlertComponent,
+    TitleCasePipe,
   ],
   templateUrl: './pending-friends.component.html',
   styleUrl: './pending-friends.component.css'
 })
-export class PendingFriendsComponent  {
+export class PendingFriendsComponent {
   findModal = false;
   friendships$!: Observable<FriendshipLite[]>;
-  messageAlert = { alert: true, type: 'info' as AlertType, message: '' };
+  messageAlert = {alert: true, type: 'info' as AlertType, message: ''};
 
-  constructor(private friendshipService: FriendshipService) {}
+  constructor(private friendshipService: FriendshipService) {
+  }
 
-  openModal(){
+  openModal() {
     this.findModal = true
     this.friendships$ = this.friendshipService.friendship$;
     this.friendshipService.getFriendshipPendingRequest().subscribe();
   }
 
   declineRequest(userId: number) {
-    this.friendshipService.declineRequest(userId).subscribe({
+    this.friendshipService.declinePendingSendRequest(userId).subscribe({
       next: data => {
         this.friendshipService.getFriendshipPendingRequest().subscribe();
-        this.setAlert(false,"success", "Friendship request cancelled");
+        this.setAlert(false, "success", "Friendship request cancelled");
       }
     })
   }
