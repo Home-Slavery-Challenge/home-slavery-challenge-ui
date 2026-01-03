@@ -4,7 +4,7 @@ import {apiFriendship} from '../config';
 import {BehaviorSubject, switchMap, tap} from 'rxjs';
 
 export type UserLite = { id: number; username: string };
-export type FriendshipLite =  { id: number, receiver: { id: number, username: string } }
+export type FriendshipLite =  { id: number, checked: boolean ,receiver: { id: number, username: string },requester: { id: number, username: string } }
 
 
 @Injectable({
@@ -15,10 +15,12 @@ export class FriendshipService {
   private usersFindSubject = new BehaviorSubject<UserLite[]>([]);
   private usersBlockedSubject = new BehaviorSubject<UserLite[]>([]);
   private friendshipSubject = new BehaviorSubject<FriendshipLite[]>([]);
+  private receivedSubject = new BehaviorSubject<FriendshipLite[]>([]);
   friends$ = this.friendsSubject.asObservable();
   usersFind$ = this.usersFindSubject.asObservable();
   usersBlocked$ = this.usersBlockedSubject.asObservable();
   friendship$ = this.friendshipSubject.asObservable();
+  received$ = this.receivedSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -71,5 +73,20 @@ export class FriendshipService {
   declinePendingSendRequest(friendshipId: number) {
     return this.http.post<any>(`${apiFriendship}/decline-request/${friendshipId}`, {observe: 'response'});
   }
+
+  getPendingReceivedRequest() {
+    return this.http.get<any>(`${apiFriendship}/pending-received`).pipe(
+      tap(friendship => this.receivedSubject.next(friendship))
+    );
+  }
+
+  markAsChecked(){
+    return this.http.post(`${apiFriendship}/check`,{observe: 'response'});
+  }
+
+  acceptFriendship(friendshipId:number){
+    return this.http.post<any>(`${apiFriendship}/accept/${friendshipId}`, {observe: 'response'});
+  }
+
 
 }

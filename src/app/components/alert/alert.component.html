@@ -1,5 +1,17 @@
 <clr-alert [(clrAlertClosed)]="alert" [clrAlertType]="type">
   <clr-alert-item>
-    <span class="alert-text">{{ message }}</span>
+    <span class="alert-text">
+      {{ message }}
+
+      @if (link) {
+        <span>&nbsp;—&nbsp;</span>
+        <a
+          [href]="link"
+          (click)="onLinkClick($event)"
+        >
+          Click here
+        </a>
+      }
+    </span>
   </clr-alert-item>
 </clr-alert>

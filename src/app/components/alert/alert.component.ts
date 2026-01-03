@@ -14,4 +14,18 @@ export class AlertComponent {
   @Input() alert = true;
   @Input() type: AlertType = 'info';
   @Input() message = '';
+  @Input() link?: string;
+  @Input() action?: () => void;
+
+  onLinkClick(event: Event) {
+    if (this.action) {
+      this.action();
+    }
+
+    if (!this.link) {
+      event.preventDefault();
+      return;
+    }
+
+  }
 }

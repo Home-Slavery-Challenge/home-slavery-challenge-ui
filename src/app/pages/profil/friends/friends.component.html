@@ -1,10 +1,10 @@
 @if (users$ | async; as users) {
   @if (users.length > 0) {
-
+    <h3>Your friends</h3>
     <clr-datagrid>
       <clr-dg-column>Name</clr-dg-column>
       <clr-dg-row *clrDgItems="let user of ((users$ | async) ?? [])" [clrDgItem]="user">
-        <clr-dg-cell>{{ user.username | titlecase}}</clr-dg-cell>
+        <clr-dg-cell>{{ user.username | titlecase }}</clr-dg-cell>
         <clr-dg-action-overflow>
           <button class="action-item" (click)="decline(user.id)">Decline</button>
           <button class="action-item" (click)="block(user.id)">Block</button>
@@ -26,7 +26,27 @@
   [message]="messageAlert.message">
 </app-alert>
 <div style="margin-top: 25px">
-<app-find-friends />
-<app-pending-friends />
-<app-blocked-friends />
+  <app-find-friends/>
+  <app-pending-friends/>
+  <app-blocked-friends/>
 </div>
+
+@if (pendingReceived$ | async; as pending) {
+  @if (pending.length > 0) {
+<h3>Friend Requests</h3>
+    <clr-datagrid>
+      <clr-dg-column>Name</clr-dg-column>
+      <clr-dg-row *clrDgItems="let f of ((pendingReceived$ | async) ?? [])" [clrDgItem]="f">
+        <clr-dg-cell>{{ f.requester.username | titlecase }}</clr-dg-cell>
+        <clr-dg-action-overflow>
+<!--          VERIFIER BUG-->
+          <button class="action-item" (click)="acceptPending(f.id)">Accept</button>
+          <button class="action-item" (click)="declinePending(f.requester.id)">Decline</button>
+          <button class="action-item" (click)="blockPending(f.requester.id)">Block</button>
+        </clr-dg-action-overflow>
+
+      </clr-dg-row>
+      <!--      <clr-dg-footer>{{ friendshipService.users.length}} users</clr-dg-footer>-->
+    </clr-datagrid>
+}
+}

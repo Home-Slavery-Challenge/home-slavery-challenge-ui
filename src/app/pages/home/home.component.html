@@ -1,2 +1,14 @@
+@if (alertPendingReceived$ | async) {
+  <div style="width: 98vw; margin: auto">
+    <app-alert
+      [alert]="false"
+      type="info"
+      message="You have pending requests"
+      link="/profil/friends"
+      [action]="togglePendingRequestsVisibility.bind(this)"
+    >
+    </app-alert>
+  </div>
+}
 <p>home page!</p>
 <cds-icon shape="user"></cds-icon>

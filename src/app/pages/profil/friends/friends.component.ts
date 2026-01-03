@@ -1,5 +1,5 @@
 import { AsyncPipe } from '@angular/common';
-import {FriendshipService, UserLite} from '../../../services/friendship.service';
+import {FriendshipLite, FriendshipService, UserLite} from '../../../services/friendship.service';
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ClrButtonGroupModule, ClrDatagridModule, ClrModalModule} from '@clr/angular';
@@ -27,6 +27,7 @@ import { TitleCasePipe } from '@angular/common';
 })
 export class FriendsComponent implements OnInit {
   users$!: Observable<UserLite[]>;
+  pendingReceived$!: Observable<FriendshipLite[]>;
   messageAlert = { alert: true, type: 'info' as AlertType, message: '' };
 
   constructor(private friendshipService: FriendshipService) {}
@@ -34,6 +35,9 @@ export class FriendsComponent implements OnInit {
   ngOnInit(): void {
     this.users$ = this.friendshipService.friends$;
     this.friendshipService.loadUserFriendships().subscribe();
+
+    this.pendingReceived$ = this.friendshipService.received$;
+    this.friendshipService.getPendingReceivedRequest().subscribe();
   }
 
   decline(userId: number) {
@@ -59,5 +63,30 @@ export class FriendsComponent implements OnInit {
     this.messageAlert.alert = alert;
     this.messageAlert.type = type;
     this.messageAlert.message = message;
+  }
+
+  declinePending(userId: number) {
+    this.friendshipService.declineFriendship(userId).subscribe({
+      next: () => {
+        this.friendshipService.getPendingReceivedRequest().subscribe();
+      }
+    });
+  }
+  acceptPending(friendshipId: number) {
+    this.friendshipService.acceptFriendship(friendshipId).subscribe({
+      next: () => {
+        this.friendshipService.getPendingReceivedRequest().subscribe();
+        this.friendshipService.loadUserFriendships().subscribe();
+      }
+    });
+  }
+
+  blockPending(userId: number) {
+    this.friendshipService.sendFriendshipBlockRequest(userId).subscribe({
+      next: () => {
+        this.friendshipService.getPendingReceivedRequest().subscribe();
+        this.friendshipService.loadUserFriendships().subscribe();
+      }
+    });
   }
 }
