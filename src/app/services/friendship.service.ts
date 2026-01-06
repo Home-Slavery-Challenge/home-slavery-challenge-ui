@@ -66,8 +66,8 @@ export class FriendshipService {
   }
 
 
-  declineFriendship(friendshipId: number) {
-    return this.http.post<any>(`${apiFriendship}/decline-friendship/${friendshipId}`, {observe: 'response'});
+  declineFriendshipByFriendId(userId: number) {
+    return this.http.post<any>(`${apiFriendship}/decline-friendship/${userId}`, {observe: 'response'});
   }
 
   declinePendingSendRequest(friendshipId: number) {

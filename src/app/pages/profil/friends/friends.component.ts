@@ -41,10 +41,10 @@ export class FriendsComponent implements OnInit {
   }
 
   decline(userId: number) {
-    this.friendshipService.declineFriendship(userId).subscribe({
+    this.friendshipService.declineFriendshipByFriendId(userId).subscribe({
       next: () => {
         this.friendshipService.loadUserFriendships().subscribe();
-        this.setAlert(false,"warning", "Friendship Blocked")
+        this.setAlert(false,"success", "Friendship declined")
       }
     });
   }
@@ -54,7 +54,7 @@ export class FriendsComponent implements OnInit {
     this.friendshipService.sendFriendshipBlockRequest(userId).subscribe({
       next: () => {
         this.friendshipService.loadUserFriendships().subscribe();
-        this.setAlert(false,"warning", "Friendship Declined")
+        this.setAlert(false,"warning", "Friendship Blocked")
       }
     });
   }
@@ -65,8 +65,8 @@ export class FriendsComponent implements OnInit {
     this.messageAlert.message = message;
   }
 
-  declinePending(userId: number) {
-    this.friendshipService.declineFriendship(userId).subscribe({
+  declinePending(friendshipId: number) {
+    this.friendshipService.declinePendingSendRequest(friendshipId).subscribe({
       next: () => {
         this.friendshipService.getPendingReceivedRequest().subscribe();
       }

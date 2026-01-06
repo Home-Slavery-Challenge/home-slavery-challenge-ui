@@ -3,15 +3,25 @@ import {AuthenticationService} from '../services/authentication.service';
 import {inject} from '@angular/core';
 
 export const tokenInterceptor: HttpInterceptorFn = (req, next) => {
-  const authService = inject(AuthenticationService)
-  const toExclude =["/login","/register"]
+  const authService = inject(AuthenticationService);
 
-  if( !toExclude.includes( req.url)) {
-    let jwt = authService.getToken()
-    let reqWithToken = req.clone({
-      setHeaders: {Authorization: `Bearer ${jwt}`},
-    })
-    return next(reqWithToken)
+  const isAuthRoute =
+    req.url.includes('/api/login') ||
+    req.url.includes('/api/auth/register');
+
+  if (isAuthRoute) {
+    return next(req);
   }
-  return next(req);
+
+  const jwt = authService.getToken();
+
+  if (!jwt) {
+    return next(req);
+  }
+
+  const reqWithToken = req.clone({
+    setHeaders: { Authorization: `Bearer ${jwt}` },
+  });
+
+  return next(reqWithToken);
 };

@@ -61,7 +61,6 @@ export class AuthenticationService {
     this.loggedUser = decodedToken.sub;
   }
 
-  //
   saveToken(jwt: string) {
     localStorage.setItem('jwt', jwt.split('Bearer ')[1]);
     this.token = jwt
