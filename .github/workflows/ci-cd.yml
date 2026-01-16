@@ -73,9 +73,8 @@ jobs:
           key: ${{ secrets.SSH_KEY_UPDATE }}
           passphrase: ${{ secrets.SSH_KEY_UPDATE_SLAVE_PASSPHRASE }}
           source: "docker-compose.yml"
-          target: "/srv/slavery-home-challenge-ui"
+          target: "/srv/slavery-home-challenge-ui/"
           overwrite: true
-          strip_components: 1
 
       - name: Upload deploy.sh to server
         uses: appleboy/scp-action@v0.1.4
