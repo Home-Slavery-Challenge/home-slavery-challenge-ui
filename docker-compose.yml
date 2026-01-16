@@ -1,9 +1,6 @@
 services:
   front:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: slave-ui:local
+    image: cansefr/slavery-home-challenge-ui:latest
     container_name: slave-ui
     ports:
       - "8081:8080"
