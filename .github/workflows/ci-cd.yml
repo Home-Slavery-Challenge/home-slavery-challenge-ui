@@ -58,7 +58,7 @@ jobs:
           context: .
           push: true
           tags: |
-            cansefr/slavery-home-challenge-ii:latest
+            cansefr/slavery-home-challenge-ui:latest
             cansefr/slavery-home-challenge-ui:${{ github.sha }}
 
   # ==========================
