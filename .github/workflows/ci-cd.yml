@@ -1,0 +1,103 @@
+name: CI / CD
+
+on:
+  push:
+    branches:
+      - dev
+      - main
+    paths-ignore:
+      - 'documentation/**'
+      - 'README.md'
+
+  pull_request:
+    branches:
+      - dev
+    paths-ignore:
+      - 'documentation/**'
+      - 'README.md'
+
+jobs:
+  # ==========================
+  # 🧪 Tests sur dev (placeholder)
+  # ==========================
+  tests:
+    runs-on: ubuntu-latest
+    if: |
+      github.event_name == 'pull_request' ||
+      (github.event_name == 'push' && github.ref == 'refs/heads/dev')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Placeholder tests
+        run: |
+          echo "No frontend tests yet."
+          echo "CI placeholder OK ✅"
+
+  # ======================================
+  # 🐳 Build & push Docker image sur main
+  # ======================================
+  docker-build-and-push:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            cansefr/slavery-home-challenge-ii:latest
+            cansefr/slavery-home-challenge-ui:${{ github.sha }}
+
+  # ==========================
+  # 🚀 Déploiement sur le serveur
+  # ==========================
+
+      - name: Upload docker-compose.yml to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER_UPDATE }}
+          key: ${{ secrets.SSH_KEY_UPDATE }}
+          passphrase: ${{ secrets.SSH_KEY_UPDATE_SLAVE_PASSPHRASE }}
+          source: "docker-compose.yml"
+          target: "/srv/slavery-home-challenge-ui"
+          overwrite: true
+          strip_components: 1
+
+      - name: Upload deploy.sh to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER_UPDATE }}
+          key: ${{ secrets.SSH_KEY_UPDATE }}
+          passphrase: ${{ secrets.SSH_KEY_UPDATE_SLAVE_PASSPHRASE }}
+          source: "deploy/deploy.sh"
+          target: "/srv/slavery-home-challenge-ui"
+          overwrite: true
+          strip_components: 1
+
+      - name: Run deploy.sh on server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER_UPDATE }}
+          key: ${{ secrets.SSH_KEY_UPDATE }}
+          passphrase: ${{ secrets.SSH_KEY_UPDATE_SLAVE_PASSPHRASE }}
+          script: |
+            set -e
+            cd /srv/slavery-home-challenge-ui
+            chmod +x deploy.sh
+            ./deploy.sh
