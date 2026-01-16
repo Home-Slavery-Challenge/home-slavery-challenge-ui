@@ -1,0 +1,10 @@
+services:
+  front:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: slave-ui:local
+    container_name: slave-ui
+    ports:
+      - "8081:8080"
+    restart: unless-stopped
