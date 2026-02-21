@@ -1,0 +1,21 @@
+<div style="margin: 15px">
+  <div>
+    <button type="button" class="btn btn-icon" (click)="handleOpenModal()">
+      <cds-icon shape="plus"></cds-icon>
+    </button>
+  </div>
+  <div>
+    <h1>Your challenges</h1>
+    <ng-container *ngIf="challenges$ | async as challenges">
+      <div *ngIf="challenges.length > 0; else elseTemplateName">
+        <div *ngFor="let c of challenges">
+          {{ c.name }}
+        </div>
+      </div>
+    </ng-container>
+    <ng-template #elseTemplateName>
+      <p>No challenges for the moment.</p>
+    </ng-template>
+  </div>
+</div>
+<app-create [(opened)]="opened" (closed)="onCreateClosed()"/>

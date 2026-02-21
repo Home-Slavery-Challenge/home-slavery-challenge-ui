@@ -28,8 +28,12 @@ export class HeaderComponent implements OnInit {
     this.authService.signOut()
   }
 
-  handleProfil(){
+  handleProfil() {
     this.router.navigate(['/profil/info']);
+  }
+
+  handleBoarding() {
+    this.router.navigate(['/boarding']);
   }
 
 }

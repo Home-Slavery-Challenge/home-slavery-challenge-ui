@@ -8,6 +8,7 @@ import {ProfilComponent} from './pages/profil/profil.component';
 import {SupportComponent} from './pages/profil/support/support.component';
 import {FriendsComponent} from './pages/profil/friends/friends.component';
 import {ProfilInfoComponent} from './pages/profil/profil-info/profil-info.component';
+import {BoardingComponent} from './pages/boarding/boarding.component';
 
 export const routes: Routes = [
   {
@@ -18,6 +19,7 @@ export const routes: Routes = [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'email-verification', component: EmailVerificationComponent},
+      {path: 'boarding', component: BoardingComponent},
       {
         path: 'profil', component: ProfilComponent, children: [
           {path: '', redirectTo: 'info', pathMatch: 'full'},
