@@ -2,22 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {apiChallenge} from '../config';
 import {BehaviorSubject, Observable, switchMap, tap} from 'rxjs';
-
-export interface ChallengeCreate {
-  name: string,
-  owner: string,
-  participants: number[],
-  rewards: string[],
-  tasks: string[],
-}
-
-export interface ChallengeLite {
-  id: number;
-  owner: {
-    username:string
-  },
-  name: string;
-}
+import {ChallengeCreate, ChallengeLite} from '../types/challenge';
 
 @Injectable({
   providedIn: 'root'

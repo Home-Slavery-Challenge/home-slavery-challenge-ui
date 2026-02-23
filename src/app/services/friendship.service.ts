@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {apiFriendship} from '../config';
-import {BehaviorSubject, switchMap, tap} from 'rxjs';
-
-export type UserLite = { id: number; username: string };
-export type FriendshipLite =  { id: number, checked: boolean ,receiver: { id: number, username: string },requester: { id: number, username: string } }
-
+import {BehaviorSubject, tap} from 'rxjs';
+import {Friendship} from '../types/friendship';
+import {UserLite} from '../types/user';
 
 @Injectable({
   providedIn: 'root'
@@ -14,8 +12,8 @@ export class FriendshipService {
   private friendsSubject = new BehaviorSubject<UserLite[]>([]);
   private usersFindSubject = new BehaviorSubject<UserLite[]>([]);
   private usersBlockedSubject = new BehaviorSubject<UserLite[]>([]);
-  private friendshipSubject = new BehaviorSubject<FriendshipLite[]>([]);
-  private receivedSubject = new BehaviorSubject<FriendshipLite[]>([]);
+  private friendshipSubject = new BehaviorSubject<Friendship[]>([]);
+  private receivedSubject = new BehaviorSubject<Friendship[]>([]);
   friends$ = this.friendsSubject.asObservable();
   usersFind$ = this.usersFindSubject.asObservable();
   usersBlocked$ = this.usersBlockedSubject.asObservable();
@@ -80,11 +78,11 @@ export class FriendshipService {
     );
   }
 
-  markAsChecked(){
-    return this.http.post(`${apiFriendship}/check`,{observe: 'response'});
+  markAsChecked() {
+    return this.http.post(`${apiFriendship}/check`, {observe: 'response'});
   }
 
-  acceptFriendship(friendshipId:number){
+  acceptFriendship(friendshipId: number) {
     return this.http.post<any>(`${apiFriendship}/accept/${friendshipId}`, {observe: 'response'});
   }
 

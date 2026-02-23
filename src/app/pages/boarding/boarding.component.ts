@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrDatagridModule, ClrIconModule, ClrModalModule} from '@clr/angular';
 import {CreateComponent} from './create/create.component';
-import {ChallengeLite, ChallengeService} from '../../services/challenge.service';
+import {ChallengeService} from '../../services/challenge.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe, NgIf, TitleCasePipe} from '@angular/common';
 import DeleteComponent from '../../modals/challenges/delete/delete.component';
 import {AuthenticationService} from '../../services/authentication.service';
-import {UserClass} from '../../types/user';
+import {ChallengeLite} from '../../types/challenge';
 
 @Component({
   selector: 'app-boarding',
@@ -38,7 +38,7 @@ export class BoardingComponent implements OnInit {
     this.userConnected = this.authService.getRegisteredUsername();
   }
 
-  handleOpenModal(){
+  handleOpenModal() {
     this.opened = true;
   }
 
@@ -46,7 +46,7 @@ export class BoardingComponent implements OnInit {
     this.challengeService.getLightChallenges().subscribe();
   }
 
-  manage(id: number){
+  manage(id: number) {
 
   }
 

@@ -6,3 +6,4 @@ export class UserClass {
   email?:string;
   enabled?:boolean;
 }
+export type UserLite = { id: number; username: string };

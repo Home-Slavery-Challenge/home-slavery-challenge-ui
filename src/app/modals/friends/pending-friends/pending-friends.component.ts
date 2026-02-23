@@ -1,9 +1,11 @@
 import {Component} from '@angular/core';
 import {ClrAlertModule, ClrDatagridModule, ClrModalModule} from "@clr/angular";
-import {FriendshipLite, FriendshipService} from '../../../services/friendship.service';
+import {FriendshipService} from '../../../services/friendship.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe, TitleCasePipe} from '@angular/common';
-import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
+import {AlertComponent} from '../../../components/alert/alert.component';
+import {Friendship} from '../../../types/friendship';
+import {AlertType} from '../../../types/alert';
 
 @Component({
   selector: 'app-pending-friends',
@@ -20,7 +22,7 @@ import {AlertComponent, AlertType} from '../../../components/alert/alert.compone
 })
 export class PendingFriendsComponent {
   findModal = false;
-  friendships$!: Observable<FriendshipLite[]>;
+  friendships$!: Observable<Friendship[]>;
   messageAlert = {alert: true, type: 'info' as AlertType, message: ''};
 
   constructor(private friendshipService: FriendshipService) {
@@ -41,12 +43,10 @@ export class PendingFriendsComponent {
     })
   }
 
-
   setAlert(alert: boolean, type: AlertType, message: string) {
     this.messageAlert.alert = alert;
     this.messageAlert.type = type;
     this.messageAlert.message = message;
   }
-
 
 }

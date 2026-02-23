@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrCommonFormsModule, ClrDatagridModule, ClrIconModule, ClrInputModule, ClrModalModule} from "@clr/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FriendshipService, UserLite} from '../../../services/friendship.service';
+import {FriendshipService} from '../../../services/friendship.service';
 import {Observable} from 'rxjs';
-import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
+import {AlertComponent} from '../../../components/alert/alert.component';
 import {AsyncPipe, TitleCasePipe} from '@angular/common';
+import {UserLite} from '../../../types/user';
+import {AlertType} from '../../../types/alert'
 
 @Component({
   selector: 'app-blocked-friends',

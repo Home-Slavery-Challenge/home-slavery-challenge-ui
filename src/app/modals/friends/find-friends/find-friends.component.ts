@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrAlertModule, ClrDatagridModule, ClrInputModule, ClrModalModule} from "@clr/angular";
 import {FormsModule} from '@angular/forms';
-import {FriendshipService, UserLite} from '../../../services/friendship.service';
+import {FriendshipService} from '../../../services/friendship.service';
 import {CommonModule} from '@angular/common';
 import {Observable} from 'rxjs';
-import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
+import {AlertComponent} from '../../../components/alert/alert.component';
+import {UserLite} from '../../../types/user';
+import {AlertType} from '../../../types/alert';
 
 @Component({
   selector: 'app-find-friends',
@@ -55,12 +57,10 @@ export class FindFriendsComponent implements OnInit {
     });
   }
 
-
   setAlert(alert: boolean, type: AlertType, message: string) {
     this.messageAlert.alert = alert;
     this.messageAlert.type = type;
     this.messageAlert.message = message;
   }
-
 
 }

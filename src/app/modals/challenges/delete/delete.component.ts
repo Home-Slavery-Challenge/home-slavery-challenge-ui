@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {ClrDatagridModule, ClrModalModule} from '@clr/angular';
-import {ChallengeLite, ChallengeService} from '../../../services/challenge.service';
-import {AlertType} from '../../../components/alert/alert.component';
+import {ChallengeService} from '../../../services/challenge.service';
+import {ChallengeLite} from '../../../types/challenge';
 import {TitleCasePipe} from '@angular/common';
 
 @Component({
@@ -18,16 +18,14 @@ class DeleteComponent {
   findModal = false;
   @Input() challenge!: ChallengeLite;
 
-
-  constructor(private  challengeService: ChallengeService) {
+  constructor(private challengeService: ChallengeService) {
   }
 
-  deleteChallenge(){
+  deleteChallenge() {
     this.challengeService.deleteChallenge(this.challenge.id).subscribe({
       next: () => (this.findModal = false),
     });
   }
-
 
   openModal(event?: MouseEvent) {
     event?.preventDefault();

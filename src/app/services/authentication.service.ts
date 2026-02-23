@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {apiLogin, apiAuth} from '../config';
+import {apiAuth, apiLogin} from '../config';
 import {UserClass} from '../types/user';
 
 
@@ -104,7 +104,7 @@ export class AuthenticationService {
   }
 
 
-  validateEmail(code: any){
+  validateEmail(code: any) {
     return this.http.get<any>(`${apiAuth}/verify-email/${code.code}`)
   }
 

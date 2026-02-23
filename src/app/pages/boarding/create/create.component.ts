@@ -2,11 +2,14 @@ import {Component, EventEmitter, input, Input, OnInit, Output} from '@angular/co
 import {ClrComboboxModule, ClrInputModule, ClrModalModule} from "@clr/angular";
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthenticationService} from '../../../services/authentication.service';
-import {FriendshipService, UserLite} from '../../../services/friendship.service';
+import {FriendshipService} from '../../../services/friendship.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe, NgIf} from '@angular/common';
-import {ChallengeCreate, ChallengeService} from '../../../services/challenge.service';
-import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
+import {ChallengeService} from '../../../services/challenge.service';
+import {AlertComponent} from '../../../components/alert/alert.component';
+import {UserLite} from '../../../types/user';
+import {AlertType} from '../../../types/alert';
+import {ChallengeCreate} from '../../../types/challenge';
 
 @Component({
   selector: 'app-create',
