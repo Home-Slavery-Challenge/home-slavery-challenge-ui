@@ -1,0 +1,11 @@
+<button type="button" class="action-item" (click)="openModal($event)">Delete</button>
+<clr-modal [(clrModalOpen)]="findModal">
+  <h3 class="modal-title">Challenge</h3>
+  <div class="modal-body">
+      <p>Do you very want to delete {{challenge.name | titlecase }} challenge ?</p>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-danger" (click)="deleteChallenge()">Delete</button>
+    <button type="button" class="btn btn-primary" (click)="findModal = false">Cancel</button>
+  </div>
+</clr-modal>
