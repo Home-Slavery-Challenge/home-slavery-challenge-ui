@@ -3,9 +3,9 @@ import {FriendshipLite, FriendshipService, UserLite} from '../../../services/fri
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ClrButtonGroupModule, ClrDatagridModule, ClrModalModule} from '@clr/angular';
-import {FindFriendsComponent} from '../../../modals/find-friends/find-friends.component';
-import {PendingFriendsComponent} from '../../../modals/pending-friends/pending-friends.component';
-import {BlockedFriendsComponent} from '../../../modals/blocked-friends/blocked-friends.component';
+import {FindFriendsComponent} from '../../../modals/friends/find-friends/find-friends.component';
+import {PendingFriendsComponent} from '../../../modals/friends/pending-friends/pending-friends.component';
+import {BlockedFriendsComponent} from '../../../modals/friends/blocked-friends/blocked-friends.component';
 import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
 import { TitleCasePipe } from '@angular/common';
 

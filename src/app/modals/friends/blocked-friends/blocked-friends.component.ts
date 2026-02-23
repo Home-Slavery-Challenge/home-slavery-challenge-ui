@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrCommonFormsModule, ClrDatagridModule, ClrIconModule, ClrInputModule, ClrModalModule} from "@clr/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import {FriendshipService, UserLite} from '../../services/friendship.service';
+import {FriendshipService, UserLite} from '../../../services/friendship.service';
 import {Observable} from 'rxjs';
-import {AlertComponent, AlertType} from '../../components/alert/alert.component';
+import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
 import {AsyncPipe, TitleCasePipe} from '@angular/common';
 
 @Component({

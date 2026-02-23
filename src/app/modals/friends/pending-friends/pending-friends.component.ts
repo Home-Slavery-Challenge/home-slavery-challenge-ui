@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
 import {ClrAlertModule, ClrDatagridModule, ClrModalModule} from "@clr/angular";
-import {FriendshipLite, FriendshipService} from '../../services/friendship.service';
+import {FriendshipLite, FriendshipService} from '../../../services/friendship.service';
 import {Observable} from 'rxjs';
 import {AsyncPipe, TitleCasePipe} from '@angular/common';
-import {AlertComponent, AlertType} from '../../components/alert/alert.component';
+import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
 
 @Component({
   selector: 'app-pending-friends',

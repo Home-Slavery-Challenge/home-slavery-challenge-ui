@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {apiLogin, apiAuth} from '../config';
-import {UserClass} from '../models/user';
+import {UserClass} from '../types/user';
 
 
 @Injectable({

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrAlertModule, ClrDatagridModule, ClrInputModule, ClrModalModule} from "@clr/angular";
 import {FormsModule} from '@angular/forms';
-import {FriendshipService, UserLite} from '../../services/friendship.service';
+import {FriendshipService, UserLite} from '../../../services/friendship.service';
 import {CommonModule} from '@angular/common';
 import {Observable} from 'rxjs';
-import {AlertComponent, AlertType} from '../../components/alert/alert.component';
+import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
 
 @Component({
   selector: 'app-find-friends',

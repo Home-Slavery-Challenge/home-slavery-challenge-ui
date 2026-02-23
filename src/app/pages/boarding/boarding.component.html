@@ -1,18 +1,30 @@
 <div style="margin: 15px">
-  <div>
+  <div style="display: flex; flex-direction: row; justify-content: flex-end">
     <button type="button" class="btn btn-icon" (click)="handleOpenModal()">
       <cds-icon shape="plus"></cds-icon>
     </button>
   </div>
   <div>
     <h1>Your challenges</h1>
-    <ng-container *ngIf="challenges$ | async as challenges">
-      <div *ngIf="challenges.length > 0; else elseTemplateName">
-        <div *ngFor="let c of challenges">
-          {{ c.name }}
-        </div>
-      </div>
+    <ng-container *ngIf="challenges$ | async as challenges; else elseTemplateName">
+      <clr-datagrid>
+        <clr-dg-column>Name</clr-dg-column>
+        <clr-dg-row *clrDgItems="let c of challenges" [clrDgItem]="c">
+          <clr-dg-cell>{{ c.name | titlecase }}</clr-dg-cell>
+
+<!--      TODO : Only owner can delete and manage challenge-->
+<!--          Changer modele lite du back et front et recuperer le owner pour determiner les choix-->
+<!--      if ...-->
+          <clr-dg-action-overflow>
+            <button class="action-item" (click)="manage(c.id)">Manage</button>
+            <app-delete  [challenge]="c" />
+          </clr-dg-action-overflow>
+<!--          Else only consult ... as player ...-->
+
+        </clr-dg-row>
+      </clr-datagrid>
     </ng-container>
+
     <ng-template #elseTemplateName>
       <p>No challenges for the moment.</p>
     </ng-template>
