@@ -13,6 +13,9 @@ export interface ChallengeCreate {
 
 export interface ChallengeLite {
   id: number;
+  owner: {
+    username:string
+  },
   name: string;
 }
 

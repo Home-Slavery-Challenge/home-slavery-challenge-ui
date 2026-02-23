@@ -12,14 +12,10 @@
         <clr-dg-row *clrDgItems="let c of challenges" [clrDgItem]="c">
           <clr-dg-cell>{{ c.name | titlecase }}</clr-dg-cell>
 
-<!--      TODO : Only owner can delete and manage challenge-->
-<!--          Changer modele lite du back et front et recuperer le owner pour determiner les choix-->
-<!--      if ...-->
-          <clr-dg-action-overflow>
-            <button class="action-item" (click)="manage(c.id)">Manage</button>
-            <app-delete  [challenge]="c" />
-          </clr-dg-action-overflow>
-<!--          Else only consult ... as player ...-->
+            <clr-dg-action-overflow *ngIf="userConnected === c.owner.username">
+              <button class="action-item" (click)="manage(c.id)">Manage</button>
+              <app-delete [challenge]="c"/>
+            </clr-dg-action-overflow>
 
         </clr-dg-row>
       </clr-datagrid>

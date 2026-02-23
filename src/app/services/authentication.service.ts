@@ -28,6 +28,10 @@ export class AuthenticationService {
     return this.registeredUser
   }
 
+  getRegisteredUsername() {
+    return this.loggedUser
+  }
+
   restoreAuth(): void {
     let jwt: any = localStorage.getItem('jwt');
     if (jwt) {

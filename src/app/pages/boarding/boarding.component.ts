@@ -3,9 +3,10 @@ import {ClrDatagridModule, ClrIconModule, ClrModalModule} from '@clr/angular';
 import {CreateComponent} from './create/create.component';
 import {ChallengeLite, ChallengeService} from '../../services/challenge.service';
 import {Observable} from 'rxjs';
-import {AsyncPipe, NgForOf, NgIf, TitleCasePipe} from '@angular/common';
-import {FriendshipService} from '../../services/friendship.service';
+import {AsyncPipe, NgIf, TitleCasePipe} from '@angular/common';
 import DeleteComponent from '../../modals/challenges/delete/delete.component';
+import {AuthenticationService} from '../../services/authentication.service';
+import {UserClass} from '../../types/user';
 
 @Component({
   selector: 'app-boarding',
@@ -26,16 +27,18 @@ export class BoardingComponent implements OnInit {
 
   challenges$!: Observable<ChallengeLite[]>;
   opened = false
+  userConnected!: string | undefined;
 
-  constructor(private challengeService: ChallengeService) {
+  constructor(private challengeService: ChallengeService, private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
     this.challenges$ = this.challengeService.challengesFind$;
     this.challengeService.getLightChallenges().subscribe();
+    this.userConnected = this.authService.getRegisteredUsername();
   }
 
-  handleOpenModal() {
+  handleOpenModal(){
     this.opened = true;
   }
 
@@ -43,7 +46,7 @@ export class BoardingComponent implements OnInit {
     this.challengeService.getLightChallenges().subscribe();
   }
 
-  manage(id:number){
+  manage(id: number){
 
   }
 
