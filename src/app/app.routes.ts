@@ -24,7 +24,7 @@ export const routes: Routes = [
       {
         path: 'boarding', component: HomeBoardingComponent, children: [
           {path: '', component: BoardComponent},
-          {path: 'manage', component: ManageComponent},
+          {path: 'manage', component: ManageComponent}
         ]
       },
       {
