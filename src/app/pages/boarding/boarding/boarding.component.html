@@ -12,10 +12,10 @@
         <clr-dg-row *clrDgItems="let c of challenges" [clrDgItem]="c">
           <clr-dg-cell>{{ c.name | titlecase }}</clr-dg-cell>
 
-            <clr-dg-action-overflow *ngIf="userConnected === c.owner.username">
-              <button class="action-item" (click)="manage(c.id)">Manage</button>
-              <app-delete [challenge]="c"/>
-            </clr-dg-action-overflow>
+          <clr-dg-action-overflow *ngIf="userConnected === c.owner.username">
+            <button class="action-item" (click)="manage(c.id)">Manage</button>
+            <app-delete [challenge]="c"/>
+          </clr-dg-action-overflow>
 
         </clr-dg-row>
       </clr-datagrid>

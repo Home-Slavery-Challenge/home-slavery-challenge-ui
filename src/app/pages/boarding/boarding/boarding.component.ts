@@ -1,24 +1,25 @@
-import {Component, OnInit} from '@angular/core';
 import {ClrDatagridModule, ClrIconModule, ClrModalModule} from '@clr/angular';
-import {CreateComponent} from './create/create.component';
-import {ChallengeService} from '../../services/challenge.service';
-import {Observable} from 'rxjs';
 import {AsyncPipe, NgIf, TitleCasePipe} from '@angular/common';
-import DeleteComponent from '../../modals/challenges/delete/delete.component';
-import {AuthenticationService} from '../../services/authentication.service';
-import {ChallengeLite} from '../../types/challenge';
+import DeleteComponent from '../../../modals/challenges/delete/delete.component';
+import {CreateComponent} from '../create/create.component';
+import {ChallengeLite} from '../../../types/challenge';
+import {Observable} from 'rxjs';
+import {ChallengeService} from '../../../services/challenge.service';
+import {AuthenticationService} from '../../../services/authentication.service';
+import {Router} from '@angular/router';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-boarding',
   imports: [
     ClrIconModule,
     ClrModalModule,
+    TitleCasePipe,
+    ClrDatagridModule,
+    DeleteComponent,
     CreateComponent,
     NgIf,
     AsyncPipe,
-    ClrDatagridModule,
-    TitleCasePipe,
-    DeleteComponent
   ],
   templateUrl: './boarding.component.html',
   styleUrl: './boarding.component.css'
@@ -29,7 +30,7 @@ export class BoardingComponent implements OnInit {
   opened = false
   userConnected!: string | undefined;
 
-  constructor(private challengeService: ChallengeService, private authService: AuthenticationService) {
+  constructor(private challengeService: ChallengeService, private authService: AuthenticationService, private router: Router) {
   }
 
   ngOnInit(): void {
@@ -47,7 +48,8 @@ export class BoardingComponent implements OnInit {
   }
 
   manage(id: number) {
-
+    this.router.navigate(['/boarding/manage'], {queryParams: {id}})
   }
 
 }
+

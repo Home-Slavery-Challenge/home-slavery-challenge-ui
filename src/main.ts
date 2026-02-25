@@ -10,7 +10,8 @@ import {
   trashIcon,
   noAccessIcon,
   minusIcon,
-  timesIcon, plusIcon
+  timesIcon, plusIcon,
+  undoIcon
 } from '@cds/core/icon';
 ClarityIcons.addIcons(barsIcon);
 ClarityIcons.addIcons(banIcon);
@@ -20,6 +21,7 @@ ClarityIcons.addIcons(noAccessIcon);
 ClarityIcons.addIcons(minusIcon);
 ClarityIcons.addIcons(timesIcon);
 ClarityIcons.addIcons(plusIcon);
+ClarityIcons.addIcons(undoIcon);
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
