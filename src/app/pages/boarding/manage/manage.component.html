@@ -5,19 +5,41 @@
 </div>
 <div *ngIf="challenge$ | async as challenge" class="challenge-card">
 
-  <div class="header">
+  <div class="header" style="  display: flex;align-items: center;justify-content: center;gap: 12px;padding: 10px;">
     <h2 class="title">{{ challenge.name }}</h2>
+    <button class="btn btn-outline btn-icon">
+      <cds-icon shape="pencil"></cds-icon>
+    </button>
   </div>
 
   <div class="section">
-    <h4>Owner</h4>
+    <div class="top-title-btn">
+
+      <div>
+        <h4>Owner</h4>
+      </div>
+      <div>
+        <button class="btn btn-outline btn-icon">
+          <cds-icon shape="pencil"></cds-icon>
+        </button>
+      </div>
+    </div>
     <div class="chips">
       <span class="chip">{{ challenge.owner.username }}</span>
     </div>
   </div>
 
   <div class="section">
-    <h4>Participants</h4>
+    <div class="top-title-btn">
+      <div>
+        <h4>Participants</h4>
+      </div>
+      <div>
+        <button class="btn btn-outline btn-icon">
+          <cds-icon shape="pencil"></cds-icon>
+        </button>
+      </div>
+    </div>
     <div class="chips">
       <span class="chip" *ngFor="let p of challenge.participants">
         {{ p.username }}
@@ -26,7 +48,16 @@
   </div>
 
   <div class="section">
-    <h4>Tasks</h4>
+    <div class="top-title-btn">
+      <div>
+        <h4>Tasks</h4>
+      </div>
+      <div>
+        <button class="btn btn-outline btn-icon">
+          <cds-icon shape="pencil"></cds-icon>
+        </button>
+      </div>
+    </div>
     <div class="list">
       <div class="row" *ngFor="let t of challenge.availableTasks">
         <span class="row-title">{{ t.name }}</span>
@@ -38,7 +69,16 @@
   </div>
 
   <div class="section">
-    <h4>Rewards</h4>
+    <div class="top-title-btn">
+      <div>
+        <h4>Rewards</h4>
+      </div>
+      <div>
+        <button class="btn btn-outline btn-icon">
+          <cds-icon shape="pencil"></cds-icon>
+        </button>
+      </div>
+    </div>
     <div class="list">
       <div class="row" *ngFor="let r of challenge.rewardPool">
         <span class="row-title">{{ r.name }}</span>
@@ -50,17 +90,23 @@
   </div>
 
   <div class="section">
-    <h4>Reward mode</h4>
+    <div class="top-title-btn">
+      <div>
+        <h4>Reward mode</h4>
+      </div>
+      <div>
+        <button class="btn btn-outline btn-icon">
+          <cds-icon shape="pencil"></cds-icon>
+        </button>
+      </div>
+    </div>
     <div class="list">
       <div class="row">
         <span class="row-title">
       {{ (challenge.rewardMode?.name ?? challenge.rewardMode) | titlecase }}
-
         </span>
       </div>
     </div>
   </div>
 
 </div>
-
-<p>manage works!</p>

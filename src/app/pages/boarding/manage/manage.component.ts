@@ -1,10 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ClrDatagridModule, ClrIconModule} from '@clr/angular';
+import {ClrButtonGroupModule, ClrDatagridModule, ClrIconModule} from '@clr/angular';
 import {ChallengeService} from '../../../services/challenge.service';
 import {Observable, switchMap} from 'rxjs';
 import {ChallengeLite} from '../../../types/challenge';
 import {AsyncPipe, NgForOf, NgIf, TitleCasePipe} from '@angular/common';
+import {AuthenticationService} from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-manage',
@@ -14,7 +15,8 @@ import {AsyncPipe, NgForOf, NgIf, TitleCasePipe} from '@angular/common';
     ClrDatagridModule,
     NgIf,
     NgForOf,
-    TitleCasePipe
+    TitleCasePipe,
+    ClrButtonGroupModule
   ],
   templateUrl: './manage.component.html',
   styleUrl: './manage.component.css'
@@ -24,26 +26,7 @@ export class ManageComponent implements OnInit {
   challenge$!: Observable<any>;
 
 
-  constructor(private router: Router, private challengeService: ChallengeService) {}
-
-  // ngOnInit(): void {
-  //   this.challenge$ = this.challengeService.challengeFind$;
-  //
-  //   const idStr = this.route.snapshot.paramMap.get('id');
-  //   if (!idStr) {
-  //     // pas d'id -> retour home
-  //     this.router.navigate(['/boarding']);
-  //     return;
-  //   }
-  //
-  //   const id = Number(idStr);
-  //   if (Number.isNaN(id)) {
-  //     this.router.navigate(['/boarding']);
-  //     return;
-  //   }
-  //
-  //   this.challengeService.getChallenge(id).subscribe();
-  // }
+  constructor(private router: Router, private challengeService: ChallengeService, private authService:AuthenticationService) {}
 
   ngOnInit(): void {
     this.challenge$ = this.challengeService.challengeFind$;
@@ -52,7 +35,9 @@ export class ManageComponent implements OnInit {
       .pipe(
         switchMap(params => this.challengeService.getChallenge(Number(params.get('id'))))
       )
-      .subscribe();
+      .subscribe({
+        next: c => c.owner.username !== this.authService.loggedUser && this.backHomeBoard()
+      });
   }
 
   backHomeBoard(){

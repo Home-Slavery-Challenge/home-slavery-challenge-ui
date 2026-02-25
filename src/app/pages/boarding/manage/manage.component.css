@@ -7,12 +7,12 @@
   box-shadow: 0 6px 28px rgba(0, 0, 0, 0.08);
 }
 
-.header {
+.top-title-btn {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 16px;
-  margin-bottom: 18px;
+  align-items: flex-end;
+  align-content: center;
+  gap: 12px;
+  padding: 10px;
 }
 
 .title {
@@ -20,8 +20,8 @@
   font-size: 24px;
   font-weight: 700;
   line-height: 1.2;
-  color:white;
-padding: 5px;
+  color: white;
+  padding: 5px;
 }
 
 .meta {
