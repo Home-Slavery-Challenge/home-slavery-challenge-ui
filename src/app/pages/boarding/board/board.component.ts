@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 import {Component, OnInit} from '@angular/core';
 
 @Component({
-  selector: 'app-boarding',
+  selector: 'app-board',
   imports: [
     ClrIconModule,
     ClrModalModule,
@@ -21,10 +21,10 @@ import {Component, OnInit} from '@angular/core';
     NgIf,
     AsyncPipe,
   ],
-  templateUrl: './boarding.component.html',
-  styleUrl: './boarding.component.css'
+  templateUrl: './board.component.html',
+  styleUrl: './board.component.css'
 })
-export class BoardingComponent implements OnInit {
+export class BoardComponent implements OnInit {
 
   challenges$!: Observable<ChallengeLite[]>;
   opened = false

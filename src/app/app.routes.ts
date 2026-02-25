@@ -10,7 +10,7 @@ import {FriendsComponent} from './pages/profil/friends/friends.component';
 import {ProfilInfoComponent} from './pages/profil/profil-info/profil-info.component';
 import {HomeBoardingComponent} from './pages/boarding/home-boarding.component';
 import {ManageComponent} from './pages/boarding/manage/manage.component';
-import {BoardingComponent} from './pages/boarding/boarding/boarding.component';
+import {BoardComponent} from './pages/boarding/board/board.component';
 
 export const routes: Routes = [
   {
@@ -23,7 +23,7 @@ export const routes: Routes = [
       {path: 'email-verification', component: EmailVerificationComponent},
       {
         path: 'boarding', component: HomeBoardingComponent, children: [
-          {path: '', component: BoardingComponent},
+          {path: '', component: BoardComponent},
           {path: 'manage', component: ManageComponent},
         ]
       },
