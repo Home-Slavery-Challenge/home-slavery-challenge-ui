@@ -3,4 +3,64 @@
     <cds-icon shape="undo"></cds-icon>
   </button>
 </div>
+<div *ngIf="challenge$ | async as challenge" class="challenge-card">
+
+  <div class="header">
+    <h2 class="title">{{ challenge.name }}</h2>
+  </div>
+
+  <div class="section">
+    <h4>Owner</h4>
+    <div class="chips">
+      <span class="chip">{{ challenge.owner.username }}</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h4>Participants</h4>
+    <div class="chips">
+      <span class="chip" *ngFor="let p of challenge.participants">
+        {{ p.username }}
+      </span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h4>Tasks</h4>
+    <div class="list">
+      <div class="row" *ngFor="let t of challenge.availableTasks">
+        <span class="row-title">{{ t.name }}</span>
+        <span class="row-sub" *ngIf="t.defaultsPoints !== undefined">
+          {{ t.defaultsPoints }} pts
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h4>Rewards</h4>
+    <div class="list">
+      <div class="row" *ngFor="let r of challenge.rewardPool">
+        <span class="row-title">{{ r.name }}</span>
+        <span class="row-sub" *ngIf="r.description">
+          {{ r.description }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <h4>Reward mode</h4>
+    <div class="list">
+      <div class="row">
+        <span class="row-title">
+      {{ (challenge.rewardMode?.name ?? challenge.rewardMode) | titlecase }}
+
+        </span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 <p>manage works!</p>

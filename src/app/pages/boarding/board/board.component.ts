@@ -34,7 +34,7 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.challenges$ = this.challengeService.challengesFind$;
+    this.challenges$ = this.challengeService.challengesLightFind$;
     this.challengeService.getLightChallenges().subscribe();
     this.userConnected = this.authService.getRegisteredUsername();
   }
@@ -48,7 +48,7 @@ export class BoardComponent implements OnInit {
   }
 
   manage(id: number) {
-    this.router.navigate(['/boarding/manage'], {queryParams: {id}})
+    this.router.navigate(['/boarding/manage'], { queryParams: { id } });
   }
 
 }

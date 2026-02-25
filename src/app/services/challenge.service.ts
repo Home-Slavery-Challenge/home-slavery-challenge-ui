@@ -2,14 +2,19 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {apiChallenge} from '../config';
 import {BehaviorSubject, Observable, switchMap, tap} from 'rxjs';
-import {ChallengeCreate, ChallengeLite} from '../types/challenge';
+import {Challenge, ChallengeCreate, ChallengeLite} from '../types/challenge';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ChallengeService {
-  private challengesSubject = new BehaviorSubject<ChallengeLite[]>([]);
-  challengesFind$ = this.challengesSubject.asObservable();
+  private challengesLightSubject = new BehaviorSubject<ChallengeLite[]>([]);
+  challengesLightFind$ = this.challengesLightSubject.asObservable();
+
+  private challengeSubject = new BehaviorSubject<Challenge|null>(null);
+  challengeFind$ = this.challengeSubject.asObservable();
+
+
 
   constructor(private http: HttpClient) {
   }
@@ -24,9 +29,15 @@ export class ChallengeService {
     );
   }
 
+  getChallenge(id:number) {
+    return this.http.get<Challenge>(`${apiChallenge}/${id}`).pipe(
+      tap(c => this.challengeSubject.next(c))
+    )
+  }
+
   getLightChallenges() {
-    return this.http.get<ChallengeLite[]>(`${apiChallenge}/`).pipe(
-      tap((c => this.challengesSubject.next(c)))
+    return this.http.get<ChallengeLite[]>(`${apiChallenge}/light`).pipe(
+      tap((c => this.challengesLightSubject.next(c)))
     )
   }
 }
