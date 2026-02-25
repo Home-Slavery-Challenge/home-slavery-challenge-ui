@@ -18,9 +18,7 @@ export class ManageComponent {
     this.challengeId = this.route.snapshot.paramMap.get('id');
     const snapshot = this.route.snapshot;
     console.log({
-      url: snapshot.url, // https://www.angular.dev
       params: snapshot.params,
-      queryParams: snapshot.queryParams, // Query parameters
     });
   }
 
