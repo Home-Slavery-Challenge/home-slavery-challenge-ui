@@ -11,9 +11,8 @@ export class ChallengeService {
   private challengesLightSubject = new BehaviorSubject<ChallengeLite[]>([]);
   challengesLightFind$ = this.challengesLightSubject.asObservable();
 
-  private challengeSubject = new BehaviorSubject<Challenge|null>(null);
+  private challengeSubject = new BehaviorSubject<Omit<Challenge, "periods">|null>(null);
   challengeFind$ = this.challengeSubject.asObservable();
-
 
 
   constructor(private http: HttpClient) {
@@ -25,19 +24,25 @@ export class ChallengeService {
 
   deleteChallenge(idChallenge: number): Observable<ChallengeLite[]> {
     return this.http.delete<void>(`${apiChallenge}/${idChallenge}`).pipe(
-      switchMap(() => this.getLightChallenges())
+      switchMap(() => this.getChallenges())
     );
   }
 
   getChallenge(id:number) {
-    return this.http.get<Challenge>(`${apiChallenge}/${id}`).pipe(
+    return this.http.get<Omit<Challenge, "periods">>(`${apiChallenge}/${id}`).pipe(
       tap(c => this.challengeSubject.next(c))
     )
   }
 
-  getLightChallenges() {
-    return this.http.get<ChallengeLite[]>(`${apiChallenge}/light`).pipe(
+  getChallenges() {
+    return this.http.get<Omit<Challenge, "periods">[]>(`${apiChallenge}/`).pipe(
       tap((c => this.challengesLightSubject.next(c)))
+    )
+  }
+
+  updateChallenge(challenge:Omit<Challenge, "periods"> ){
+    return this.http.put<Omit<Challenge, "periods">>(`${apiChallenge}/`, challenge).pipe(
+      tap(c => this.challengeSubject.next(c))
     )
   }
 }

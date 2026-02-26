@@ -7,14 +7,11 @@
 
   <div class="header" style="  display: flex;align-items: center;justify-content: center;gap: 12px;padding: 10px;">
     <h2 class="title">{{ challenge.name }}</h2>
-    <button class="btn btn-outline btn-icon">
-      <cds-icon shape="pencil"></cds-icon>
-    </button>
+    <app-modify-challenge-name [challenge]="challenge"/>
   </div>
 
   <div class="section">
     <div class="top-title-btn">
-
       <div>
         <h4>Owner</h4>
       </div>
@@ -103,7 +100,7 @@
     <div class="list">
       <div class="row">
         <span class="row-title">
-      {{ (challenge.rewardMode?.name ?? challenge.rewardMode) | titlecase }}
+      {{ (challenge.rewardMode) | titlecase }}
         </span>
       </div>
     </div>

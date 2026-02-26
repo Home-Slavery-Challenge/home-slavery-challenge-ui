@@ -1,0 +1,15 @@
+<button class="btn btn-outline btn-icon" (click)="modalOpen = true">
+  <cds-icon shape="pencil"></cds-icon>
+</button>
+<clr-modal [(clrModalOpen)]="modalOpen">
+  <h3 class="modal-title">Modify challenge name</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="nameChallengeForm">
+      <input clrInput placeholder="Challenge name" formControlName="name" />
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="handleClose()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="handleModify()">Modify</button>
+  </div>
+</clr-modal>

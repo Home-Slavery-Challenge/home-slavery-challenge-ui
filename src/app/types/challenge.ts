@@ -1,4 +1,3 @@
-import {Role, RoleName} from './role';
 import {RewardMode, RewardPool} from './reward';
 import {TasksAvailable} from './task';
 import {User} from './user';
@@ -9,7 +8,7 @@ export interface Challenge {
   name: string,
   owner: User,
   participants: User[],
-  periods: Period[]
+  periods: Period[],
   availableTasks: TasksAvailable[],
   rewardPool: RewardPool[],
   rewardMode: RewardMode

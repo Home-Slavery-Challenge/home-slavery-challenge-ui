@@ -35,7 +35,7 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.challenges$ = this.challengeService.challengesLightFind$;
-    this.challengeService.getLightChallenges().subscribe();
+    this.challengeService.getChallenges().subscribe();
     this.userConnected = this.authService.getRegisteredUsername();
   }
 
@@ -44,7 +44,7 @@ export class BoardComponent implements OnInit {
   }
 
   onCreateClosed() {
-    this.challengeService.getLightChallenges().subscribe();
+    this.challengeService.getChallenges().subscribe();
   }
 
   manage(id: number) {
