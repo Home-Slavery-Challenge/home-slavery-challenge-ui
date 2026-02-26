@@ -1,8 +1,9 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ClrCommonFormsModule, ClrInputModule, ClrModalModule} from '@clr/angular';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Challenge} from '../../../../../types/challenge';
 import {ChallengeService} from '../../../../../services/challenge.service';
+import {AlertType} from '../../../../../types/alert';
 
 @Component({
   selector: 'app-modify-challenge-name',
@@ -18,6 +19,7 @@ import {ChallengeService} from '../../../../../services/challenge.service';
 })
 export class ModifyChallengeNameComponent implements OnInit {
   @Input() challenge!: Omit<Challenge, "periods">;
+  @Output() alert = new EventEmitter<{ type: AlertType, message: string }>();
   modalOpen = false;
 
   constructor(private challengeService: ChallengeService) {
@@ -38,13 +40,23 @@ export class ModifyChallengeNameComponent implements OnInit {
 
   handleModify() {
     const newName = this.nameChallengeForm.value['name'];
-    if (this.challenge?.name !== newName) {
-      this.challenge.name = newName!;
-      this.challengeService.updateChallenge(this.challenge).subscribe({
-        error:(e)=>
-      })
-    }
 
+    if (this.challenge?.name !== newName) {
+
+      const updatedChallenge = {
+        ...this.challenge,
+        name: newName!
+      };
+
+      this.challengeService.updateChallenge(updatedChallenge).subscribe({
+        next: (res) => {
+          this.alert.emit({type: "success", message: `${res.message} modified successfully`,});
+        },
+        error: (err) => {
+          this.alert.emit({type: "danger", message: err?.error?.message ?? "Error during modify challenge",});
+        },
+      });
+    }
     this.modalOpen = false;
   }
 }
