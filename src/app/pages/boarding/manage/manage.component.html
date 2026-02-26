@@ -5,21 +5,18 @@
 </div>
 <div *ngIf="challenge$ | async as challenge" class="challenge-card">
 
+  <div style="margin-bottom: 10px">
+    <app-alert [alert]="messageAlert.alert" [type]="messageAlert.type" [message]="messageAlert.message"></app-alert>
+  </div>
+
   <div class="header" style="  display: flex;align-items: center;justify-content: center;gap: 12px;padding: 10px;">
     <h2 class="title">{{ challenge.name }}</h2>
-    <app-modify-challenge-name [challenge]="challenge"/>
+    <app-modify-challenge-name (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
   </div>
 
   <div class="section">
     <div class="top-title-btn">
-      <div>
         <h4>Owner</h4>
-      </div>
-      <div>
-        <button class="btn btn-outline btn-icon">
-          <cds-icon shape="pencil"></cds-icon>
-        </button>
-      </div>
     </div>
     <div class="chips">
       <span class="chip">{{ challenge.owner.username }}</span>
@@ -32,9 +29,7 @@
         <h4>Participants</h4>
       </div>
       <div>
-        <button class="btn btn-outline btn-icon">
-          <cds-icon shape="pencil"></cds-icon>
-        </button>
+       <app-participants (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"  />
       </div>
     </div>
     <div class="chips">

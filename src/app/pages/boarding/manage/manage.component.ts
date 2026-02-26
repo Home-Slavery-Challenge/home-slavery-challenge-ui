@@ -8,6 +8,8 @@ import {AuthenticationService} from '../../../services/authentication.service';
 import {ModifyChallengeNameComponent} from './dialogs/name/modify-challenge-name.component';
 import {Challenge} from '../../../types/challenge';
 import {AlertComponent} from '../../../components/alert/alert.component';
+import {AlertType} from '../../../types/alert';
+import {ModifyParticipantsComponent} from './dialogs/participants/modify-participants.component';
 
 @Component({
   selector: 'app-manage',
@@ -20,17 +22,20 @@ import {AlertComponent} from '../../../components/alert/alert.component';
     TitleCasePipe,
     ClrButtonGroupModule,
     ModifyChallengeNameComponent,
-    AlertComponent
+    AlertComponent,
+    ModifyParticipantsComponent
   ],
   templateUrl: './manage.component.html',
   styleUrl: './manage.component.css'
 })
 export class ManageComponent implements OnInit {
   private route = inject(ActivatedRoute);
-  challenge$!: Observable<Omit<Challenge,"periods">|null>;
+  challenge$!: Observable<Omit<Challenge, "periods"> | null>;
+  messageAlert = {alert: true, type: 'info' as AlertType, message: ''};
 
 
-  constructor(private router: Router, private challengeService: ChallengeService, private authService:AuthenticationService) {}
+  constructor(private router: Router, private challengeService: ChallengeService, private authService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     this.challenge$ = this.challengeService.challengeFind$;
@@ -44,7 +49,13 @@ export class ManageComponent implements OnInit {
       });
   }
 
-  backHomeBoard(){
+  setAlert(type?: AlertType, message?: string): void {
+    this.messageAlert.alert = false;
+    this.messageAlert.message = message!;
+    this.messageAlert.type = type!;
+  }
+
+  backHomeBoard() {
     this.router.navigate(['/boarding']);
   }
 }
