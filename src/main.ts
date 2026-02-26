@@ -13,7 +13,8 @@ import {
   searchIcon,
   timesIcon,
   trashIcon,
-  undoIcon
+  undoIcon,
+  userIcon,
 } from '@cds/core/icon';
 
 ClarityIcons.addIcons(barsIcon);
@@ -26,6 +27,7 @@ ClarityIcons.addIcons(timesIcon);
 ClarityIcons.addIcons(plusIcon);
 ClarityIcons.addIcons(undoIcon);
 ClarityIcons.addIcons(pencilIcon);
+ClarityIcons.addIcons(userIcon);
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
