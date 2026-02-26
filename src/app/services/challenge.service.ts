@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {apiChallenge} from '../config';
 import {BehaviorSubject, Observable, switchMap, tap} from 'rxjs';
 import {Challenge, ChallengeCreate, ChallengeLite} from '../types/challenge';
+import {ApiResponse} from '../types/common';
+
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,7 @@ export class ChallengeService {
   private challengesLightSubject = new BehaviorSubject<ChallengeLite[]>([]);
   challengesLightFind$ = this.challengesLightSubject.asObservable();
 
-  private challengeSubject = new BehaviorSubject<Omit<Challenge, "periods">|null>(null);
+  private challengeSubject = new BehaviorSubject<Omit<Challenge, "periods"> | null>(null);
   challengeFind$ = this.challengeSubject.asObservable();
 
 
@@ -28,7 +30,7 @@ export class ChallengeService {
     );
   }
 
-  getChallenge(id:number) {
+  getChallenge(id: number) {
     return this.http.get<Omit<Challenge, "periods">>(`${apiChallenge}/${id}`).pipe(
       tap(c => this.challengeSubject.next(c))
     )
@@ -40,9 +42,11 @@ export class ChallengeService {
     )
   }
 
-  updateChallenge(challenge:Omit<Challenge, "periods"> ){
-    return this.http.put<Omit<Challenge, "periods">>(`${apiChallenge}/`, challenge).pipe(
-      tap(c => this.challengeSubject.next(c))
-    )
+  updateChallenge(challenge: Omit<Challenge, "periods">) {
+    return this.http
+      .patch<ApiResponse<Omit<Challenge, "periods">>>(`${apiChallenge}/`, challenge)
+      .pipe(
+        tap((res) => this.challengeSubject.next(res.data))
+      );
   }
 }
