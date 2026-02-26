@@ -13,8 +13,8 @@ export class UserClass {
 export type UserLite = { id: number; username: string };
 
 export interface User extends Identifiable, DateFields{
-  username: "insulance",
+  username: string,
   enabled: true,
-  email: "insulancebooking@gmail.com",
+  email: string,
   roles:Role [],
 }
