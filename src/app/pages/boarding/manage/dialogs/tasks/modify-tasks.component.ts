@@ -58,7 +58,7 @@ export class ModifyTasksComponent implements OnInit {
       defaultsPoints: Number(this.taskForm.value['points']!),
     } as TasksAvailable;
 
-    this.tasks.push(newTask); // ✅ tu gardes push
+    this.tasks.push(newTask);
 
     this.taskForm.reset({ name: '', points: '' });
   }

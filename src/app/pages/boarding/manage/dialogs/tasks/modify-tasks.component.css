@@ -46,11 +46,9 @@
   max-width: 260px;
 }
 
-.task-chip__points {
-  display: inline-flex;
-  align-items: center;
+.task-chip__details {
   gap: 6px;
-  font-size: 0.9rem;
+  font-size: 0.5rem;
   opacity: 0.9;
 }
 
