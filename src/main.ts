@@ -15,6 +15,8 @@ import {
   trashIcon,
   undoIcon,
   userIcon,
+  flameIcon,
+  listIcon,
 } from '@cds/core/icon';
 
 ClarityIcons.addIcons(barsIcon);
@@ -28,6 +30,8 @@ ClarityIcons.addIcons(plusIcon);
 ClarityIcons.addIcons(undoIcon);
 ClarityIcons.addIcons(pencilIcon);
 ClarityIcons.addIcons(userIcon);
+ClarityIcons.addIcons(flameIcon);
+ClarityIcons.addIcons(listIcon);
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
