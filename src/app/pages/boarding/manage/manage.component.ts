@@ -10,6 +10,7 @@ import {Challenge} from '../../../types/challenge';
 import {AlertComponent} from '../../../components/alert/alert.component';
 import {AlertType} from '../../../types/alert';
 import {ModifyParticipantsComponent} from './dialogs/participants/modify-participants.component';
+import {ModifyTasksComponent} from './dialogs/tasks/modify-tasks.component';
 
 @Component({
   selector: 'app-manage',
@@ -23,7 +24,8 @@ import {ModifyParticipantsComponent} from './dialogs/participants/modify-partici
     ClrButtonGroupModule,
     ModifyChallengeNameComponent,
     AlertComponent,
-    ModifyParticipantsComponent
+    ModifyParticipantsComponent,
+    ModifyTasksComponent
   ],
   templateUrl: './manage.component.html',
   styleUrl: './manage.component.css'

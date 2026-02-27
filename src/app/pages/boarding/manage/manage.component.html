@@ -29,7 +29,7 @@
         <h4>Participants</h4>
       </div>
       <div>
-       <app-participants (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"  />
+       <app-modify-participants (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"  />
       </div>
     </div>
     <div class="chips">
@@ -45,9 +45,7 @@
         <h4>Tasks</h4>
       </div>
       <div>
-        <button class="btn btn-outline btn-icon">
-          <cds-icon shape="pencil"></cds-icon>
-        </button>
+        <app-modify-tasks (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
       </div>
     </div>
     <div class="list">
