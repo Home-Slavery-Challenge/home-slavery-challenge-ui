@@ -17,6 +17,7 @@ import {
   userIcon,
   flameIcon,
   listIcon,
+  infoStandardIcon
 } from '@cds/core/icon';
 
 ClarityIcons.addIcons(barsIcon);
@@ -32,6 +33,7 @@ ClarityIcons.addIcons(pencilIcon);
 ClarityIcons.addIcons(userIcon);
 ClarityIcons.addIcons(flameIcon);
 ClarityIcons.addIcons(listIcon);
+ClarityIcons.addIcons(infoStandardIcon);
 
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
