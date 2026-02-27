@@ -18,7 +18,7 @@ import {FriendshipService} from '../../../../../services/friendship.service';
 import {AsyncPipe} from '@angular/common';
 
 @Component({
-  selector: 'app-participants',
+  selector: 'app-modify-participants',
   imports: [
     ClrCommonFormsModule,
     ClrIconModule,
@@ -38,7 +38,6 @@ export class ModifyParticipantsComponent {
   @Input() challenge!: Omit<Challenge, "periods">;
   @Output() alert = new EventEmitter<{ type: AlertType, message: string }>();
   modalOpen = false;
-  participants?: UserLite[];
 
   friends$!: Observable<UserLite[]>;
 
