@@ -1,0 +1,101 @@
+<button class="btn btn-outline btn-icon" (click)="modalOpen = true" aria-label="Edit tasks">
+  <cds-icon shape="pencil"></cds-icon>
+</button>
+
+<clr-modal [(clrModalOpen)]="modalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">Modify challenge tasks</h3>
+
+  <div class="modal-body">
+
+    <app-alert
+      *ngIf="tasks.length === 0"
+      [type]="'warning'"
+      [alert]="false"
+      [message]="'You need at least 1 task to validate the challenge.'"
+    ></app-alert>
+
+    <!-- Toolbar -->
+    <div class="tasks-toolbar">
+      <div class="tasks-toolbar__left">
+        <span class="tasks-count">
+          <cds-icon shape="list"></cds-icon>
+          {{ tasks.length }} task(s)
+        </span>
+      </div>
+
+      <div class="tasks-toolbar__right">
+        <button type="button" class="btn btn-sm btn-outline" (click)="reinitTasks()">
+          <cds-icon shape="undo"></cds-icon>
+          Reinit
+        </button>
+      </div>
+    </div>
+
+    <!-- Tasks list -->
+    <div class="tasks-list" *ngIf="tasks.length; else emptyTasks">
+      <div class="task-chip" *ngFor="let t of tasks">
+        <div class="task-chip__content">
+          <div class="task-chip__name">{{ t.name }}</div>
+          <div class="task-chip__points">
+            <cds-icon shape="flame"></cds-icon>
+            {{ t.defaultsPoints }} pts
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-sm btn-danger btn-icon"
+          (click)="handleDeleteTask(t.id)"
+          aria-label="Delete task"
+        >
+          <cds-icon  shape="trash"></cds-icon>
+        </button>
+      </div>
+    </div>
+
+    <ng-template #emptyTasks>
+      <div class="empty-state">
+        <cds-icon shape="info-circle"></cds-icon>
+        No tasks yet. Add your first one below.
+      </div>
+    </ng-template>
+
+    <div class="divider"></div>
+
+    <!-- Add form -->
+    <form class="add-form" [formGroup]="taskForm">
+      <div class="add-form__grid">
+        <clr-input-container>
+          <label>Task name</label>
+          <input clrInput type="text" formControlName="name" placeholder="e.g. Vacuum cleaner" />
+          <clr-control-error *ngIf="taskForm.controls.name.invalid && taskForm.controls.name.touched">
+            Name must be between 2 and 20 characters.
+          </clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+          <label>Points</label>
+          <input clrInput type="number" formControlName="points" placeholder="0" />
+          <clr-control-error *ngIf="taskForm.controls.points.invalid && taskForm.controls.points.touched">
+            Points must be 0 or more.
+          </clr-control-error>
+        </clr-input-container>
+      </div>
+
+      <div class="add-form__actions">
+        <button type="button" class="btn btn-sm btn-primary" (click)="addTask()">
+          <cds-icon shape="plus"></cds-icon>
+          Add
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="handleClose()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="handleModify()" [disabled]="!tasks.length">
+      Save changes
+    </button>
+  </div>
+</clr-modal>
