@@ -64,9 +64,7 @@
         <h4>Rewards</h4>
       </div>
       <div>
-        <button class="btn btn-outline btn-icon">
-          <cds-icon shape="pencil"></cds-icon>
-        </button>
+        <app-modify-rewards  (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
       </div>
     </div>
     <div class="list">

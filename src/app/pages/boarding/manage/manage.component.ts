@@ -11,6 +11,7 @@ import {AlertComponent} from '../../../components/alert/alert.component';
 import {AlertType} from '../../../types/alert';
 import {ModifyParticipantsComponent} from './dialogs/participants/modify-participants.component';
 import {ModifyTasksComponent} from './dialogs/tasks/modify-tasks.component';
+import {ModifyRewardsComponent} from './dialogs/rewards/modify-rewards.component';
 
 @Component({
   selector: 'app-manage',
@@ -25,7 +26,8 @@ import {ModifyTasksComponent} from './dialogs/tasks/modify-tasks.component';
     ModifyChallengeNameComponent,
     AlertComponent,
     ModifyParticipantsComponent,
-    ModifyTasksComponent
+    ModifyTasksComponent,
+    ModifyRewardsComponent
   ],
   templateUrl: './manage.component.html',
   styleUrl: './manage.component.css'

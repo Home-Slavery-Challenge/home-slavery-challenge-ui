@@ -1,0 +1,101 @@
+<button class="btn btn-outline btn-icon" (click)="modalOpen = true" aria-label="Edit rewards">
+  <cds-icon shape="pencil"></cds-icon>
+</button>
+
+<clr-modal [(clrModalOpen)]="modalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">Modify challenge rewards</h3>
+
+  <div class="modal-body">
+
+    <app-alert
+      *ngIf="rewards.length === 0"
+      [type]="'warning'"
+      [alert]="false"
+      [message]="'You need at least 1 task to validate the challenge.'"
+    ></app-alert>
+
+    <!-- Toolbar -->
+    <div class="tasks-toolbar">
+      <div class="tasks-toolbar__left">
+        <span class="tasks-count">
+          <cds-icon shape="list"></cds-icon>
+          {{ rewards.length }} reward(s)
+        </span>
+      </div>
+
+      <div class="tasks-toolbar__right">
+        <button type="button" class="btn btn-sm btn-outline" (click)="reinitTasks()">
+          <cds-icon shape="undo"></cds-icon>
+          Reinit
+        </button>
+      </div>
+    </div>
+
+    <!-- Tasks list -->
+    <div class="tasks-list" *ngIf="rewards.length; else emptyTasks">
+      <div class="task-chip" *ngFor="let t of rewards">
+        <div class="task-chip__content">
+          <div class="task-chip__name">{{ t.name }}</div>
+          <div class="task-chip__details">
+            <cds-icon shape="info-standard"></cds-icon>
+            {{ t.description }}
+          </div>
+        </div>
+
+        <button
+          type="button"
+          class="btn btn-sm btn-danger btn-icon"
+          (click)="handleDeleteReward(t.id)"
+          aria-label="Delete task"
+        >
+          <cds-icon  shape="trash"></cds-icon>
+        </button>
+      </div>
+    </div>
+
+    <ng-template #emptyTasks>
+      <div class="empty-state">
+        <cds-icon shape="info-circle"></cds-icon>
+        No reward yet. Add your first one below.
+      </div>
+    </ng-template>
+
+    <div class="divider"></div>
+
+    <!-- Add form -->
+    <form class="add-form" [formGroup]="rewardForm">
+      <div class="add-form__grid">
+        <clr-input-container>
+          <label>Name</label>
+          <input clrInput type="text" formControlName="name" placeholder="e.g. Vacuum cleaner" />
+          <clr-control-error *ngIf="rewardForm.controls.name.invalid && rewardForm.controls.name.touched">
+            Name must be between 2 and 20 characters.
+          </clr-control-error>
+        </clr-input-container>
+
+        <clr-input-container>
+          <label>Description</label>
+          <input clrInput type="text" formControlName="desc" placeholder="Description ..." />
+          <clr-control-error *ngIf="rewardForm.controls.desc.invalid && rewardForm.controls.desc.touched">
+            Name must be between 2 and 20 characters.
+          </clr-control-error>
+        </clr-input-container>
+      </div>
+
+      <div class="add-form__actions">
+        <button type="button" class="btn btn-sm btn-primary" (click)="addReward()">
+          <cds-icon shape="plus"></cds-icon>
+          Add
+        </button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="handleClose()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="handleModify()" [disabled]="!rewards.length">
+      Save changes
+    </button>
+  </div>
+</clr-modal>
