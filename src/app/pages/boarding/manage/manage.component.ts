@@ -12,6 +12,7 @@ import {AlertType} from '../../../types/alert';
 import {ModifyParticipantsComponent} from './dialogs/participants/modify-participants.component';
 import {ModifyTasksComponent} from './dialogs/tasks/modify-tasks.component';
 import {ModifyRewardsComponent} from './dialogs/rewards/modify-rewards.component';
+import {RewardMode} from '../../../types/reward';
 
 @Component({
   selector: 'app-manage',
@@ -62,4 +63,6 @@ export class ManageComponent implements OnInit {
   backHomeBoard() {
     this.router.navigate(['/boarding']);
   }
+
+  protected readonly RewardMode = RewardMode;
 }

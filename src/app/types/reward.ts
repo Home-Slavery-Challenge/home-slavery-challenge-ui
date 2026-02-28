@@ -1,6 +1,10 @@
 import {Identifiable} from './common';
 
-export type RewardMode = 'RECURRING'|'RANDOM'
+export enum RewardMode {
+  RECURRING = 'RECURRING',
+  RANDOM = 'RANDOM'
+}
+
 export interface RewardPool extends Identifiable{
   name: string,
   description: string

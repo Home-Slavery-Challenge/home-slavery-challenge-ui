@@ -11,7 +11,8 @@ export interface Challenge {
   periods: Period[],
   availableTasks: TasksAvailable[],
   rewardPool: RewardPool[],
-  rewardMode: RewardMode
+  rewardMode: RewardMode,
+  recurringReward?: RewardPool;
 }
 
 

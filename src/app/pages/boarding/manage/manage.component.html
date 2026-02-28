@@ -91,7 +91,7 @@
     <div class="list">
       <div class="row">
         <span class="row-title">
-      {{ (challenge.rewardMode) | titlecase }}
+      {{ (challenge.rewardMode! === RewardMode.RANDOM ?challenge.rewardMode!:challenge.recurringReward?.name! ) | titlecase }}
         </span>
       </div>
     </div>
