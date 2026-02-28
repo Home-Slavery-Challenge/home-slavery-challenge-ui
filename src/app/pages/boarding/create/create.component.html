@@ -1,0 +1,142 @@
+<clr-modal #modal [(clrModalOpen)]="opened" [clrModalSize]="'md'">
+  <div class="modal-title">Challenge creation</div>
+
+  <div class="modal-body">
+    <form [formGroup]="newGroupeChallenge">
+      <clr-input-container>
+        <label>Creator</label>
+        <input clrInput type="text" formControlName="owner" readonly/>
+      </clr-input-container>
+
+      <clr-input-container>
+        <label>Group name</label>
+        <clr-control-error *ngIf="nameCtrl.hasError('required')">
+          Le nom est obligatoire.
+        </clr-control-error>
+
+        <clr-control-error *ngIf="nameCtrl.hasError('minlength')">
+          Minimum 3 caractères.
+        </clr-control-error>
+
+        <clr-control-error *ngIf="nameCtrl.hasError('maxlength')">
+          Maximum 20 caractères.
+        </clr-control-error>
+        <input clrInput type="text" placeholder="My new group" formControlName="name"/>
+      </clr-input-container>
+
+      <clr-combobox-container>
+        <label>Players</label>
+
+        <clr-combobox
+          formControlName="participants"
+          clrMulti="true"
+          required
+        >
+          <ng-container *clrOptionSelected="let selected">
+            {{ selected?.username }}
+          </ng-container>
+
+          <clr-options>
+            <clr-option
+              *clrOptionItems="let friend of ((friends$ | async) ?? []); field: 'username'"
+              [clrValue]="friend"
+            >
+              {{ friend.username }}
+            </clr-option>
+          </clr-options>
+        </clr-combobox>
+
+        <clr-control-helper>Select one or more friends</clr-control-helper>
+      </clr-combobox-container>
+
+      <clr-combobox-container>
+        <label>Rewards</label>
+
+        <clr-combobox
+          formControlName="rewards"
+          clrMulti="true"
+          required
+        >
+          <ng-container *clrOptionSelected="let selected">
+            {{ selected }}
+          </ng-container>
+
+          <clr-options>
+            <clr-option
+              *clrOptionItems="let r of ((rewards ) ?? []); field: 'name'"
+              [clrValue]="r"
+            >
+              {{ r }}
+            </clr-option>
+          </clr-options>
+        </clr-combobox>
+
+        <clr-control-error *ngIf="rewardsCtrl.hasError('required')">
+          Rewards are mandatory.
+        </clr-control-error>
+
+        <clr-control-helper>Select one or more rewards</clr-control-helper>
+      </clr-combobox-container>
+
+      <clr-input-container>
+        <label>Add reward</label>
+        <input clrInput type="text" placeholder="New reward" formControlName="reward"/>
+
+
+      </clr-input-container>
+      <button type="button" (click)="addReward()">Add</button>
+
+
+      <clr-combobox-container>
+        <label>Tasks</label>
+
+        <clr-combobox
+          formControlName="tasks"
+          clrMulti="true"
+          required
+        >
+          <ng-container *clrOptionSelected="let selected">
+            {{ selected }}
+          </ng-container>
+
+          <clr-options>
+            <clr-option
+              *clrOptionItems="let r of ((tasks ) ?? []); field: 'name'"
+              [clrValue]="r"
+            >
+              {{ r }}
+            </clr-option>
+          </clr-options>
+        </clr-combobox>
+        <clr-control-error *ngIf="tasksCtrl.hasError('required')">
+          Task are mandatory.
+        </clr-control-error>
+        <clr-control-helper>Select one or more task</clr-control-helper>
+      </clr-combobox-container>
+
+      <clr-input-container>
+        <label>Add task</label>
+        <input clrInput type="text" placeholder="New task" formControlName="task"/>
+        <clr-control-error *ngIf="tasksCtrl.hasError('minlength')">
+          Minimum 1 task.
+        </clr-control-error>
+      </clr-input-container>
+      <button type="button" (click)="addTask()">Add</button>
+
+
+    </form>
+  </div>
+
+  <div class="modal-body" >
+    <app-alert
+      [alert]="messageAlert.alert"
+      [type]="messageAlert.type"
+      [message]="messageAlert.message">
+    </app-alert>
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="handleCancel()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="handleSend()">Ok</button>
+  </div>
+</clr-modal>

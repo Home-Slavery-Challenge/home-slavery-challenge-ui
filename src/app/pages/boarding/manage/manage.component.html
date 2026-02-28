@@ -1,0 +1,104 @@
+<div style="display: flex; flex-direction: row;margin: 10px">
+  <button type="button" class="btn btn-icon" (click)="backHomeBoard()">
+    <cds-icon shape="undo"></cds-icon>
+  </button>
+</div>
+<div *ngIf="challenge$ | async as challenge" class="challenge-card">
+
+  <div style="margin-bottom: 10px">
+    <app-alert [alert]="messageAlert.alert" [type]="messageAlert.type" [message]="messageAlert.message"></app-alert>
+  </div>
+
+  <div class="header" style="  display: flex;align-items: center;justify-content: center;gap: 12px;padding: 10px;">
+    <h2 class="title">{{ challenge.name }}</h2>
+    <app-modify-challenge-name (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
+  </div>
+
+  <div class="section">
+    <div class="top-title-btn">
+      <h4>Owner</h4>
+    </div>
+    <div class="chips">
+      <span class="chip">{{ challenge.owner.username }}</span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="top-title-btn">
+      <div>
+        <h4>Participants</h4>
+      </div>
+      <div>
+        <app-modify-participants (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
+      </div>
+    </div>
+    <div class="chips">
+      <span class="chip" *ngFor="let p of challenge.participants">
+        {{ p.username }}
+      </span>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="top-title-btn">
+      <div>
+        <h4>Tasks</h4>
+      </div>
+      <div>
+        <app-modify-tasks (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
+      </div>
+    </div>
+    <div class="list">
+      <div class="row" *ngFor="let t of challenge.availableTasks">
+        <span class="row-title">{{ t.name }}</span>
+        <span class="row-sub" *ngIf="t.defaultsPoints !== undefined">
+          {{ t.defaultsPoints }} pts
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="top-title-btn">
+      <div>
+        <h4>Rewards</h4>
+      </div>
+      <div>
+        <app-modify-rewards (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
+      </div>
+    </div>
+    <div class="list">
+      <div class="row" *ngFor="let r of challenge.rewardPool">
+        <span class="row-title">{{ r.name }}</span>
+        <span class="row-sub" *ngIf="r.description">
+          {{ r.description }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="top-title-btn">
+      <div>
+        <h4>Reward mode</h4>
+      </div>
+      <div>
+        <app-modify-mode (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
+      </div>
+    </div>
+
+    <div class="list">
+      <div class="row">
+        <span class="row-title">
+      {{ (challenge.rewardMode! === RewardMode.RANDOM ? challenge.rewardMode! : challenge.recurringReward?.name!) | titlecase }}
+        </span>
+        <ng-container *ngIf="challenge.rewardMode === RewardMode.RECURRING">
+          <span class="row-sub">
+          {{ challenge.recurringReward?.name }}
+          </span>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+</div>

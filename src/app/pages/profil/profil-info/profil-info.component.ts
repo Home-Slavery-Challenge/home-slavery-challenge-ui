@@ -14,11 +14,12 @@ import {AuthenticationService} from '../../../services/authentication.service';
 })
 export class ProfilInfoComponent implements OnInit {
   input = '';
-  username=""
+  username = ""
+
   constructor(private authService: AuthenticationService) {
   }
 
   ngOnInit(): void {
-        this.username = this.authService.loggedUser!
-    }
+    this.username = this.authService.loggedUser!
+  }
 }

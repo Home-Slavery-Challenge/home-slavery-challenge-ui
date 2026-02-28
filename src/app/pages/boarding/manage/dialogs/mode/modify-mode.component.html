@@ -1,0 +1,42 @@
+<button class="btn btn-outline btn-icon" (click)="modalOpen = true" aria-label="Edit rewards">
+  <cds-icon shape="pencil"></cds-icon>
+</button>
+
+<clr-modal [(clrModalOpen)]="modalOpen" [clrModalClosable]="false">
+  <h3 class="modal-title">Modify challenge reward mode</h3>
+
+  <div class="modal-body">
+
+    <clr-toggle-container>
+      <clr-toggle-wrapper>
+        <label>{{ isRandom ? (RewardMode.RANDOM | titlecase) : (RewardMode.RECURRING | titlecase) }}</label>
+        <input type="checkbox" clrToggle [(ngModel)]="isRandom"/>
+      </clr-toggle-wrapper>
+    </clr-toggle-container>
+
+    <ng-container *ngIf="!isRandom">
+      <clr-radio-container>
+      <label>Select the recurring reward</label>
+        <clr-radio-wrapper *ngFor="let t of rewards">
+          <input
+            type="radio"
+            clrRadio
+            name="options"
+            [(ngModel)]="rewardSelectedId"
+            [value]="t.id"
+            required
+          />
+          <label>{{ t.name }}</label>
+        </clr-radio-wrapper>
+      </clr-radio-container>
+    </ng-container>
+
+  </div>
+
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="handleClose()">Cancel</button>
+    <button type="button" class="btn btn-primary" (click)="handleModify()">
+      Save changes
+    </button>
+  </div>
+</clr-modal>

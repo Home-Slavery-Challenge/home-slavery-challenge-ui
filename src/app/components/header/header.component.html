@@ -12,13 +12,11 @@
         </button>
         <clr-dropdown-menu *clrIfOpen>
           <label class="dropdown-header" aria-hidden="true">Menu</label>
-          <!--          <div clrDropdownItem>Admin</div>-->
-          <!--          <div class="dropdown-divider" role="separator" aria-hidden="true"></div>-->
               <div clrDropdownItem (click)="handleProfil()">
                 Profil
               </div>
           <div class="dropdown-divider" role="separator" aria-hidden="true"></div>
-          <div clrDropdownItem>Boarding</div>
+          <div clrDropdownItem (click)="handleBoarding()" >Boarding</div>
         </clr-dropdown-menu>
       </clr-dropdown>
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ClrIconModule, ClrVerticalNavModule} from '@clr/angular';
-import {Router, RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
+import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {InfoSection, sectionInfo} from './const';
 
 
@@ -22,7 +22,8 @@ export class ProfilComponent implements OnInit {
 
   sectionArray: InfoSection[] = [];
 
-  constructor() {}
+  constructor() {
+  }
 
   ngOnInit(): void {
     this.sectionArray = sectionInfo;

@@ -1,0 +1,36 @@
+<button class="btn btn-outline btn-icon" (click)="modalOpen = true">
+  <cds-icon shape="pencil"></cds-icon>
+</button>
+<clr-modal [(clrModalOpen)]="modalOpen">
+  <h3 class="modal-title">Modify challenge participants</h3>
+  <div class="modal-body">
+    <app-alert [type]="'danger'" [alert]="false"
+               [message]="'Warning ! Delete a members delete all his history challenge'"/>
+
+    <form [formGroup]="challengeForm">
+      <clr-combobox-container>
+        <label>Participants</label>
+        <clr-combobox formControlName="participants" clrMulti="true" required>
+        <ng-container *clrOptionSelected="let selected">
+          <cds-icon shape="user" role="img" aria-label="welcome home"></cds-icon>
+          {{ selected?.username }}
+        </ng-container>
+        <clr-options>
+          <clr-option *clrOptionItems="let friend of (friends$ | async) ?? []; field: 'username'" [clrValue]="friend">
+            <cds-icon shape="user" role="img" aria-label="Sun is shining !"></cds-icon>
+            {{ friend.username }}
+          </clr-option>
+        </clr-options>
+      </clr-combobox>
+      <clr-control-helper>You are automaticly inside</clr-control-helper>
+
+    </clr-combobox-container>
+    </form>
+
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline" (click)="handleClose()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="handleModify()">Modify</button>
+  </div>
+</clr-modal>
+

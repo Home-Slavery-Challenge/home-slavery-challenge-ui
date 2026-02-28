@@ -1,14 +1,14 @@
 <div class="login-wrapper">
-  <form class="login" [formGroup]="verifForm" (ngSubmit)="onValidateEmail()">
+  <form class="login" [formGroup]="verifyForm" (ngSubmit)="onValidateEmail()">
     <div class="login-body">
       <section class="title">
         <div class="welcome">Confirmation</div>
       </section>
 
       @if (!emailValidated) {
-          <h3>Validated</h3>
-          <a href="/" class="signup">Back Home</a>
-          <a href="/login" class="signup">Login</a>
+        <h3>Validated</h3>
+        <a href="/" class="signup">Back Home</a>
+        <a href="/login" class="signup">Login</a>
 
       } @else {
         <div class="login-group">

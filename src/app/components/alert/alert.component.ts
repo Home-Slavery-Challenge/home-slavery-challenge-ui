@@ -1,7 +1,6 @@
-import { Component, Input } from '@angular/core';
-import { ClrAlertModule } from '@clr/angular';
-
-export type AlertType = 'success' | 'warning' | 'danger' | 'info';
+import {Component, Input} from '@angular/core';
+import {ClrAlertModule} from '@clr/angular';
+import {AlertType} from '../../types/alert';
 
 @Component({
   selector: 'app-alert',
