@@ -16,7 +16,7 @@
 
   <div class="section">
     <div class="top-title-btn">
-        <h4>Owner</h4>
+      <h4>Owner</h4>
     </div>
     <div class="chips">
       <span class="chip">{{ challenge.owner.username }}</span>
@@ -29,7 +29,7 @@
         <h4>Participants</h4>
       </div>
       <div>
-       <app-modify-participants (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"  />
+        <app-modify-participants (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
       </div>
     </div>
     <div class="chips">
@@ -64,7 +64,7 @@
         <h4>Rewards</h4>
       </div>
       <div>
-        <app-modify-rewards  (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
+        <app-modify-rewards (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
       </div>
     </div>
     <div class="list">
@@ -83,16 +83,20 @@
         <h4>Reward mode</h4>
       </div>
       <div>
-        <button class="btn btn-outline btn-icon">
-          <cds-icon shape="pencil"></cds-icon>
-        </button>
+        <app-modify-mode (alert)="setAlert($event.type, $event.message)" [challenge]="challenge"/>
       </div>
     </div>
+
     <div class="list">
       <div class="row">
         <span class="row-title">
-      {{ (challenge.rewardMode! === RewardMode.RANDOM ?challenge.rewardMode!:challenge.recurringReward?.name! ) | titlecase }}
+      {{ (challenge.rewardMode! === RewardMode.RANDOM ? challenge.rewardMode! : challenge.recurringReward?.name!) | titlecase }}
         </span>
+        <ng-container *ngIf="challenge.rewardMode === RewardMode.RECURRING">
+          <span class="row-sub">
+          {{ challenge.recurringReward?.name }}
+          </span>
+        </ng-container>
       </div>
     </div>
   </div>

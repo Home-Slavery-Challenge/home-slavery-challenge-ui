@@ -13,6 +13,7 @@ import {ModifyParticipantsComponent} from './dialogs/participants/modify-partici
 import {ModifyTasksComponent} from './dialogs/tasks/modify-tasks.component';
 import {ModifyRewardsComponent} from './dialogs/rewards/modify-rewards.component';
 import {RewardMode} from '../../../types/reward';
+import {ModifyModeComponent} from './dialogs/mode/modify-mode.component';
 
 @Component({
   selector: 'app-manage',
@@ -28,7 +29,8 @@ import {RewardMode} from '../../../types/reward';
     AlertComponent,
     ModifyParticipantsComponent,
     ModifyTasksComponent,
-    ModifyRewardsComponent
+    ModifyRewardsComponent,
+    ModifyModeComponent
   ],
   templateUrl: './manage.component.html',
   styleUrl: './manage.component.css'
