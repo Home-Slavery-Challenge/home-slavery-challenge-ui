@@ -4,7 +4,7 @@ export interface InfoSection {
 }
 
 export const sectionInfo: InfoSection[] = [
-  { title: 'Profil',  path: '/profil/info' },
-  { title: 'Friends', path: '/profil/friends' },
-  { title: 'Support', path: '/profil/support' },
+  {title: 'Profil', path: '/profil/info'},
+  {title: 'Friends', path: '/profil/friends'},
+  {title: 'Support', path: '/profil/support'},
 ];

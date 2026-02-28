@@ -4,9 +4,10 @@ import { ClarityIcons, userIcon } from '@cds/core/icon';
 import {ClrIconModule} from '@clr/angular';
 import {AuthenticationService} from '../../services/authentication.service';
 import {map, Observable, tap} from 'rxjs';
-import {FriendshipLite, FriendshipService, UserLite} from '../../services/friendship.service';
 import {AlertComponent} from '../../components/alert/alert.component';
 import {AsyncPipe} from '@angular/common';
+import {FriendshipLite} from '../../types/friendship';
+import {FriendshipService} from '../../services/friendship.service';
 ClarityIcons.addIcons(userIcon);
 
 @Component({

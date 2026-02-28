@@ -1,13 +1,15 @@
-import { AsyncPipe } from '@angular/common';
-import {FriendshipLite, FriendshipService, UserLite} from '../../../services/friendship.service';
+import {AsyncPipe, TitleCasePipe} from '@angular/common';
+import {FriendshipService} from '../../../services/friendship.service';
 import {Component, OnInit} from '@angular/core';
 import {Observable} from 'rxjs';
 import {ClrButtonGroupModule, ClrDatagridModule, ClrModalModule} from '@clr/angular';
-import {FindFriendsComponent} from '../../../modals/find-friends/find-friends.component';
-import {PendingFriendsComponent} from '../../../modals/pending-friends/pending-friends.component';
-import {BlockedFriendsComponent} from '../../../modals/blocked-friends/blocked-friends.component';
-import {AlertComponent, AlertType} from '../../../components/alert/alert.component';
-import { TitleCasePipe } from '@angular/common';
+import {FindFriendsComponent} from '../../../modals/friends/find-friends/find-friends.component';
+import {PendingFriendsComponent} from '../../../modals/friends/pending-friends/pending-friends.component';
+import {BlockedFriendsComponent} from '../../../modals/friends/blocked-friends/blocked-friends.component';
+import {AlertComponent} from '../../../components/alert/alert.component';
+import {FriendshipLite} from '../../../types/friendship';
+import {UserLite} from '../../../types/user';
+import {AlertType} from '../../../types/alert';
 
 @Component({
   selector: 'app-friends',
@@ -28,9 +30,10 @@ import { TitleCasePipe } from '@angular/common';
 export class FriendsComponent implements OnInit {
   users$!: Observable<UserLite[]>;
   pendingReceived$!: Observable<FriendshipLite[]>;
-  messageAlert = { alert: true, type: 'info' as AlertType, message: '' };
+  messageAlert = {alert: true, type: 'info' as AlertType, message: ''};
 
-  constructor(private friendshipService: FriendshipService) {}
+  constructor(private friendshipService: FriendshipService) {
+  }
 
   ngOnInit(): void {
     this.users$ = this.friendshipService.friends$;
@@ -44,17 +47,16 @@ export class FriendsComponent implements OnInit {
     this.friendshipService.declineFriendshipByFriendId(userId).subscribe({
       next: () => {
         this.friendshipService.loadUserFriendships().subscribe();
-        this.setAlert(false,"success", "Friendship declined")
+        this.setAlert(false, "success", "Friendship declined")
       }
     });
   }
-
 
   block(userId: any) {
     this.friendshipService.sendFriendshipBlockRequest(userId).subscribe({
       next: () => {
         this.friendshipService.loadUserFriendships().subscribe();
-        this.setAlert(false,"warning", "Friendship Blocked")
+        this.setAlert(false, "warning", "Friendship Blocked")
       }
     });
   }
@@ -72,6 +74,7 @@ export class FriendsComponent implements OnInit {
       }
     });
   }
+
   acceptPending(friendshipId: number) {
     this.friendshipService.acceptFriendship(friendshipId).subscribe({
       next: () => {

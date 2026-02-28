@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {UserClass} from '../../models/user';
+import {UserClass} from '../../types/user';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -26,9 +26,7 @@ export class EmailVerificationComponent implements OnInit {
   emailValidated = false;
 
   constructor(
-    private route: ActivatedRoute,
     private authService: AuthenticationService,
-    private router: Router,
   ) {
   }
 
@@ -37,27 +35,27 @@ export class EmailVerificationComponent implements OnInit {
   }
 
 
-  verifForm = new FormGroup({
+  verifyForm = new FormGroup({
     code: new FormControl('', [Validators.required]),
   });
 
-  onValidateEmail(){
-    this.errorMessage = checkMailVerifcationFields(this.verifForm);
+  onValidateEmail() {
+    this.errorMessage = checkMailVerifcationFields(this.verifyForm);
     if (this.errorMessage !== "") {
       return
     }
 
-    this.authService.validateEmail(this.verifForm.value).subscribe({
+    this.authService.validateEmail(this.verifyForm.value).subscribe({
       next: (res) => {
-this.emailValidated = true;
+        this.emailValidated = true;
       },
-      error:(err:any) => {
+      error: (err: any) => {
 
-        if((err.error.errorCode === "INVALID_TOKEN")){
+        if ((err.error.errorCode === "INVALID_TOKEN")) {
           this.errorMessage = "Votre code n'est pas valide !"
         }
 
-        if((err.error.errorCode === "EXPIRED_TOKEN")){
+        if ((err.error.errorCode === "EXPIRED_TOKEN")) {
           this.errorMessage = "Votre code à expiré !"
         }
       }
