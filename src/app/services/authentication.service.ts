@@ -103,9 +103,12 @@ export class AuthenticationService {
     this.router.navigate(['/']);
   }
 
-
   validateEmail(code: any) {
     return this.http.get<any>(`${apiAuth}/verify-email/${code.code}`)
+  }
+
+  forgotPassword(email: string) {
+    return this.http.get<any>(`${apiAuth}/forgot-password/${email}`)
   }
 
 }

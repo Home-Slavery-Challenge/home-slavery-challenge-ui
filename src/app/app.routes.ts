@@ -11,6 +11,7 @@ import {ProfilInfoComponent} from './pages/profil/profil-info/profil-info.compon
 import {HomeBoardingComponent} from './pages/boarding/home-boarding.component';
 import {ManageComponent} from './pages/boarding/manage/manage.component';
 import {BoardComponent} from './pages/boarding/board/board.component';
+import {ForgotPasswordComponent} from './pages/forgot-password/forgot-password.component';
 
 export const routes: Routes = [
   {
@@ -21,6 +22,7 @@ export const routes: Routes = [
       {path: 'login', component: LoginComponent},
       {path: 'register', component: RegisterComponent},
       {path: 'email-verification', component: EmailVerificationComponent},
+      {path: 'forgot-password', component: ForgotPasswordComponent},
       {
         path: 'boarding', component: HomeBoardingComponent, children: [
           {path: '', component: BoardComponent},
