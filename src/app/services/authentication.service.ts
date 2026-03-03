@@ -3,7 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
 import {JwtHelperService} from '@auth0/angular-jwt';
 import {apiAuth, apiLogin} from '../config';
-import {UserClass} from '../types/user';
+import {UserClass, UserDetailClass} from '../types/user';
+import {BehaviorSubject, tap} from 'rxjs';
+import {ChallengeLite} from '../types/challenge';
 
 
 @Injectable({
@@ -16,6 +18,9 @@ export class AuthenticationService {
   public token: string | undefined;
 
   public registeredUser: UserClass = new UserClass()
+
+  private userSubject = new BehaviorSubject<UserDetailClass>({});
+  userFind$ = this.userSubject.asObservable();
 
   constructor(private http: HttpClient, private jwtHelper: JwtHelperService, private router: Router) {
   }
@@ -109,6 +114,16 @@ export class AuthenticationService {
 
   forgotPassword(email: string) {
     return this.http.get<any>(`${apiAuth}/forgot-password/${email}`)
+  }
+
+  getUserinfo(){
+    return this.http.get<UserDetailClass>(`${apiAuth}/info`)  .pipe(
+      tap((res) => this.userSubject.next(res))
+    );
+  }
+
+  updatePassword(oldPassword: string, newPassword: string){
+    return this.http.put<any>(`${apiAuth}/update-password`, {oldPassword, newPassword})
   }
 
 }

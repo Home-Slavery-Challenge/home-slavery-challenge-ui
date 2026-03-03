@@ -18,3 +18,12 @@ export interface User extends Identifiable, DateFields{
   email: string,
   roles:Role [],
 }
+
+export class UserDetailClass {
+  id?: number;
+  username?: string;
+  email?:string;
+  createdAt?:string;
+  nbChallenge?:number;
+  nbFriend?:number;
+}
