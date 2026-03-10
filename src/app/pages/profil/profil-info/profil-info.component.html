@@ -1,19 +1,78 @@
-<div style="text-align: center">
-  <label >Info</label>
+<div class="profile-container">
+
+  @if (user$ | async; as u) {
+
+    <!-- HEADER -->
+    <div class="profile-header">
+      <div class="avatar">
+        {{ u.username!.charAt(0).toUpperCase() }}
+      </div>
+
+      <div class="welcome">
+        <h2>Bonjour {{ u.username }} 👋</h2>
+        <div class="meta">
+          <span class="email">{{ u.email }}</span>
+          <span class="dot">•</span>
+          <span class="since">Membre depuis {{ u.createdAt | date:'MMMM y' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ALERT -->
+    <div style="margin-bottom: 10px">
+      <app-alert [alert]="messageAlert.alert" [type]="messageAlert.type" [message]="messageAlert.message"></app-alert>
+    </div>
+
+    <!-- CARD -->
+    <div class="card">
+      <div class="card-header">
+        Profil
+      </div>
+
+      <div class="card-block">
+
+        <!-- STATS -->
+        <div class="stats">
+          <div class="stat">
+            <div class="stat-value">{{ u.nbChallenge }}</div>
+            <div class="stat-label">Challenge(s)</div>
+          </div>
+
+          <div class="stat">
+            <div class="stat-value">{{ u.nbFriend }}</div>
+            <div class="stat-label">Ami(s)</div>
+          </div>
+        </div>
+
+        <hr/>
+
+        <!-- INFOS -->
+        <div class="info-row">
+          <strong>Username</strong>
+          <span>{{ u.username | titlecase }}</span>
+        </div>
+
+        <div class="info-row">
+          <strong>Email</strong>
+          <span>{{ u.email }}</span>
+        </div>
+
+        <div class="info-row">
+          <strong>Create</strong>
+          <span>{{ u.createdAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+        <div class="info-row">
+          <strong>Last update</strong>
+          <span>{{ u.updatedAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+
+
+      </div>
+
+      <div class="card-footer">
+        <app-modify-password (alert)="setAlert($event.type, $event.message)"></app-modify-password>
+      </div>
+    </div>
+  }
+
 </div>
-
-<form clrForm>
-  <clr-input-container>
-    <label>Username</label>
-    <input clrInput [placeholder]=username name="username" [(ngModel)]="input" />
-  </clr-input-container>
-  <clr-input-container>
-    <label>Email</label>
-    <input clrInput placeholder="Fill me in, scotty!" name="email" [(ngModel)]="input" />
-  </clr-input-container>
-  <clr-input-container>
-    <label>Password</label>
-    <input clrInput placeholder="Fill me in, scotty!" name="password" [(ngModel)]="input" />
-  </clr-input-container>
-</form>
-
