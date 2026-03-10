@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {AuthenticationService} from '../../../services/authentication.service';
 import {UserDetailClass} from '../../../types/user';
 import {Observable} from 'rxjs';
-import {AsyncPipe, DatePipe} from '@angular/common';
+import {AsyncPipe, DatePipe, TitleCasePipe} from '@angular/common';
 import {ModifyPasswordComponent} from './dialogs/modify-password/modify-password.component';
 import {AlertComponent} from '../../../components/alert/alert.component';
 import {AlertType} from '../../../types/alert';
@@ -17,7 +17,8 @@ import {AlertType} from '../../../types/alert';
     AsyncPipe,
     DatePipe,
     ModifyPasswordComponent,
-    AlertComponent
+    AlertComponent,
+    TitleCasePipe
   ],
   templateUrl: './profil-info.component.html',
   styleUrl: './profil-info.component.css'

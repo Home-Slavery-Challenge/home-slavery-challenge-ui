@@ -49,7 +49,7 @@
         <!-- INFOS -->
         <div class="info-row">
           <strong>Username</strong>
-          <span>{{ u.username }}</span>
+          <span>{{ u.username | titlecase }}</span>
         </div>
 
         <div class="info-row">
@@ -58,9 +58,14 @@
         </div>
 
         <div class="info-row">
-          <strong>Créé le</strong>
+          <strong>Create</strong>
           <span>{{ u.createdAt | date:'dd/MM/yyyy' }}</span>
         </div>
+        <div class="info-row">
+          <strong>Last update</strong>
+          <span>{{ u.updatedAt | date:'dd/MM/yyyy' }}</span>
+        </div>
+
 
       </div>
 

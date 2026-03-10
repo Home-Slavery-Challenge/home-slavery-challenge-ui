@@ -24,6 +24,7 @@ export class UserDetailClass {
   username?: string;
   email?:string;
   createdAt?:string;
+  updatedAt?:string;
   nbChallenge?:number;
   nbFriend?:number;
 }
